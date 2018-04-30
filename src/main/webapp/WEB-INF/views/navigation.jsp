@@ -75,11 +75,11 @@
 			<li>
 				<ul class="collapsible collapsible-accordion">
 					<li><a class="collapsible-header waves-effect arrow-r"><i
-							class="fa fa-chevron-right"></i> Submit blog<i
+							class="fa fa-chevron-right"></i> Informazioni Paziente<i
 							class="fa fa-angle-down rotate-icon"></i></a>
 						<div class="collapsible-body">
 							<ul>
-								<li><a href="#" class="waves-effect">Submit listing</a></li>
+								<li><a href="/dashboard/infoPaziente" class="waves-effect">Cerca Paziente</a></li>
 								<li><a href="#" class="waves-effect">Registration form</a>
 								</li>
 							</ul>

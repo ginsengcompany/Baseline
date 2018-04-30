@@ -34,6 +34,12 @@ public class HelloWorldController {
 		return "contatti";
 	}
 
+	@RequestMapping(value = "/dashboard/infoPaziente", method = RequestMethod.GET)
+	public String infoPazientePage(ModelMap model) {
+		model.addAttribute("user", getPrincipal());
+		return "infoPaziente";
+	}
+
 	@RequestMapping(value = "/loginError", method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model) {
 		model.addAttribute("user", getPrincipal());
