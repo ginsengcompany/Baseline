@@ -22,7 +22,7 @@
         <!-- Card content -->
         <div class="card-body ">
 
-            <form id="frmContact" name="frmContact" action="ControllerJavaEmail" method="POST" novalidate="novalidate">
+            <form id="frmContact" name="frmContact" action="/dashboard/infoPaziente" method="POST" novalidate="novalidate">
                 <!-- Material input name -->
                 <div class="md-form form-sm">
                     <i class="fa fa-address-book prefix"></i>
