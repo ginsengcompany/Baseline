@@ -1,22 +1,23 @@
 package it.baseline.model;
 
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "paziente")
+@Table(name = "PAZIENTE")
 public class Paziente {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "codice_fiscale")
+    @Column(name = "CODICE_FISCALE", nullable=false)
     private String codiceFiscale;
 
-    @Column(name = "nome")
+    @Column(name = "NOME", nullable=false)
     private String nome;
 
-    @Column(name = "cognome")
+    @Column(name = "COGNOME", nullable=false)
     private String cognome;
 
     public int getId() {
@@ -52,11 +53,11 @@ public class Paziente {
 
     @Override
     public String toString() {
-        return "Paziente{" +
-                "id=" + id +
-                ", codiceFiscale='" + codiceFiscale + '\'' +
-                ", nome='" + nome + '\'' +
-                ", cognome='" + cognome + '\'' +
+
+        return "{" +
+                " 'codiceFiscale':'" + codiceFiscale + '\'' +
+                ", 'nome':'" + nome + '\'' +
+                ", 'cognome':'" + cognome + '\'' +
                 '}';
     }
 }

@@ -3,17 +3,29 @@ package it.baseline.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import it.baseline.model.Paziente;
+import it.baseline.service.PazienteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class RequestMappingController {
+
+    @Autowired
+    private PazienteService pazienteService;
+
+	ModelAndView modelAndView=new ModelAndView();
 
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
@@ -40,10 +52,30 @@ public class RequestMappingController {
 		return "infoPaziente";
 	}
 
+    @RequestMapping(value = "/dashboard/infoPaziente", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView infoPaziente(@ModelAttribute("cercaPaziente") Paziente paziente) {
+        paziente = pazienteService.cercaCodiceFiscale(paziente.getCodiceFiscale());
+        if(paziente == null){
+        	String message = "Nessun Paziente";
+			return new ModelAndView("redirect:" + "/dashboard/infoPaziente", "paziente", message);
+		}
+		else{
+			return new ModelAndView("redirect:" + "/dashboard/infoPaziente", "paziente", paziente.toString());
+		}
+
+}
+
 	@RequestMapping(value = "/loginError", method = RequestMethod.GET)
-	public String accessDeniedPage(ModelMap model) {
+	public String loginErrorPage(ModelMap model) {
 		model.addAttribute("user", getPrincipal());
 		return "login-error";
+	}
+
+	@RequestMapping(value = "/accessDeniedPage", method = RequestMethod.GET)
+	public String accessDeniedPage(ModelMap model) {
+		model.addAttribute("user", getPrincipal());
+		return "accessDeniedPage";
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)

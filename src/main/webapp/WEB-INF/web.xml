@@ -17,10 +17,10 @@
         <location>/error/NotFound.jsp</location>
     </error-page>
 
-    <error-page>
+    <!--<error-page>
         <error-code>500</error-code>
         <location>/error/InternalServerError.jsp</location>
-    </error-page>
+    </error-page>-->
 
     <error-page>
         <error-code>503</error-code>

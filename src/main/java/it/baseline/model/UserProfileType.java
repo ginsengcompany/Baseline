@@ -1,7 +1,8 @@
 package it.baseline.model;
 
 public enum UserProfileType {
-	MMG("MMG");
+	MMG("MMG"),
+	INF("INF");
 	
 	String userProfileType;
 	

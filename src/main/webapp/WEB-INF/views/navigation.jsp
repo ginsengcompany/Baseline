@@ -80,7 +80,6 @@
 						<div class="collapsible-body">
 							<ul>
 								<li><a href="/dashboard/infoPaziente" class="waves-effect">Cerca Paziente</a></li>
-								<li><a href="#" class="waves-effect">Registration form</a>
 								</li>
 							</ul>
 						</div></li>
