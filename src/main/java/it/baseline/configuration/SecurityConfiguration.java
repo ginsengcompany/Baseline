@@ -26,7 +26,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 	  http.authorizeRequests()
 	  	.antMatchers("/").permitAll()
-		.antMatchers("/dashboard").permitAll()
 	  	.antMatchers("/dashboard/**").access("hasRole('MMG')")
 	  	.and().formLogin().loginPage("/")
 	  	.usernameParameter("ssoId").passwordParameter("password")

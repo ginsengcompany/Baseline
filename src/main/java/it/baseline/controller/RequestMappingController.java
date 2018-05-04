@@ -55,7 +55,7 @@ public class RequestMappingController {
     @RequestMapping(value = "/dashboard/infoPaziente", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView infoPaziente(@ModelAttribute("cercaPaziente") Paziente paziente) {
-        paziente = pazienteService.cercaCodiceFiscale(paziente.getCodiceFiscale());
+        paziente = pazienteService.cercaCodiceFiscale(paziente.getCodiceFiscale().toUpperCase());
         if(paziente == null){
         	String message = "Nessun Paziente";
 			return new ModelAndView("redirect:" + "/dashboard/infoPaziente", "paziente", message);
