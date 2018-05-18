@@ -8,12 +8,13 @@
 <%@ include file="index.jsp" %>
 <script language='JavaScript'>
 
-    <!--
+    /*
 
     var BackPage = location.history(-1);
 
     document.write("<meta http-equiv='refresh' content='0; url=" + BackPage + "'>");
-    //-->
+
+   */
 
 </script>
 <br>

@@ -1,1 +1,14 @@
 /* Your custom styles */
+.table-wrapper {
+    display: block;
+    max-height: 300px;
+    overflow-y: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+
+.checkbox-rounded [type="checkbox"][class*='filled-in']+label:after {
+    border-radius: 50%;
+}
+
+

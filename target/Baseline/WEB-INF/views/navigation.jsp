@@ -11,7 +11,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
 <link rel="apple-touch-icon" sizes="57x57"
 	href="../../static/images/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60"
@@ -48,13 +51,29 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="../../static/css/font-awesome.min.css">
 <!-- Bootstrap core CSS -->
 <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link href="../../static/css/mdb.min.css" rel="stylesheet">
+	<link rel="stylesheet" id="compiled.css-css" href="../../static/css/compiled.min.css" type="text/css" media="all">
+
 <!-- Your custom styles (optional) -->
 <link href="../../static/css/style.css" rel="stylesheet">
+
+<!-- dataTables.bootstrap4 -->
+<link href="../../static/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<!-- select.bootstrap4 -->
+<link href="../../static/css/select.bootstrap4.min.css" rel="stylesheet">
+
+<!-- responsive.dataTables -->
+<link href="../../static/css/responsive.dataTables.css" rel="stylesheet">
+
+<!-- buttons.dataTables -->
+<link href="../../static/css/buttons.dataTables.min.css" rel="stylesheet">
+
+
+
 </head>
 <body class="fixed-sn light-blue-skin">
 
@@ -75,48 +94,47 @@
 			<li>
 				<ul class="collapsible collapsible-accordion">
 					<li><a class="collapsible-header waves-effect arrow-r"><i
-							class="fa fa-chevron-right"></i> Informazioni Paziente<i
+							class="fa fa-chevron-right"></i>Informazioni Paziente<i
 							class="fa fa-angle-down rotate-icon"></i></a>
 						<div class="collapsible-body">
 							<ul>
-								<li><a href="/dashboard/infoPaziente" class="waves-effect">Cerca Paziente</a></li>
+								<li><a href="<c:url value="/dashboard/tabulato" />" class="waves-effect">Tabulato Pazienti</a></li>
 								</li>
 							</ul>
 						</div></li>
-					<%--<li><a class="collapsible-header waves-effect arrow-r"><i
-							class="fa fa-hand-pointer-o"></i> Instruction<i
-							class="fa fa-angle-down rotate-icon"></i></a>
-						<div class="collapsible-body">
-							<ul>
-								<li><a href="#" class="waves-effect">For bloggers</a></li>
-								<li><a href="#" class="waves-effect">For authors</a></li>
-							</ul>
-						</div></li>
-					<li><a class="collapsible-header waves-effect arrow-r"><i
-							class="fa fa-eye"></i> About<i
-							class="fa fa-angle-down rotate-icon"></i></a>
-						<div class="collapsible-body">
-							<ul>
-								<li><a href="#" class="waves-effect">Introduction</a></li>
-								<li><a href="#" class="waves-effect">Monthly meetings</a></li>
-							</ul>
-						</div></li>
-					<li><a class="collapsible-header waves-effect arrow-r"><i
-							class="fa fa-envelope-o"></i> Contact me<i
-							class="fa fa-angle-down rotate-icon"></i></a>
-						<div class="collapsible-body">
-							<ul>
-								<li><a href="#" class="waves-effect">FAQ</a></li>
-								<li><a href="#" class="waves-effect">Write a message</a></li>
-								<li><a href="#" class="waves-effect">FAQ</a></li>
-								<li><a href="#" class="waves-effect">Write a message</a></li>
-								<li><a href="#" class="waves-effect">FAQ</a></li>
-								<li><a href="#" class="waves-effect">Write a message</a></li>
-								<li><a href="#" class="waves-effect">FAQ</a></li>
-								<li><a href="#" class="waves-effect">Write a message</a></li>
-							</ul>
-						</div></li>--%>
 				</ul>
+                <ul class="collapsible collapsible-accordion">
+                    <li><a class="collapsible-header waves-effect arrow-r"><i
+                            class="fa fa-chevron-right"></i>MMG/PLS/Altre Strutture<i
+                            class="fa fa-angle-down rotate-icon"></i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="<c:url value="/dashboard/primaValutazione" />" class="waves-effect">Prima Valutazione</a></li>
+                                </li>
+                            </ul>
+                        </div></li>
+                </ul>
+                <ul class="collapsible collapsible-accordion">
+                    <li><a class="collapsible-header waves-effect arrow-r"><i
+                            class="fa fa-chevron-right"></i>Amb.Nefrologico ( Centro Nefrologico di Riferimenro)<i
+                            class="fa fa-angle-down rotate-icon"></i></a>
+                        <div class="collapsible-body">
+                            <ul>
+								<li><a href="<c:url value="/dashboard/secondaValutazione" />" class="waves-effect">Valutazione Specialistica</a></li>
+								</li>
+                            </ul>
+                        </div></li>
+                </ul>
+                <ul class="collapsible collapsible-accordion">
+                    <li><a class="collapsible-header waves-effect arrow-r"><i
+                            class="fa fa-chevron-right"></i>Strutture Amb.Malattia Renale Avanzata/Orientamento alla Terapia SostitutivaUrgenza<i
+                            class="fa fa-angle-down rotate-icon"></i></a>
+                        <div class="collapsible-body">
+                            <ul>
+
+                            </ul>
+                        </div></li>
+                </ul>
 			</li>
 			<!--/. Side navigation links -->
 		</ul>
@@ -174,12 +192,41 @@
 	<script type="text/javascript" src="../../static/js/bootstrap.min.js"></script>
 
 	<!-- MDB core JavaScript -->
-	<script type="text/javascript" src="../../static/js/mdb.min.js"></script>
+	<script type="text/javascript" src="../../static/js/compiled.min.js"></script>
 	<script>
         
         // SideNav Initialization
         jQuery(".button-collapse").sideNav();
 
     </script>
+
+	<!-- jquery.dataTables -->
+	<script type="text/javascript" src="../../static/js/jquery.dataTables.min.js"></script>
+
+	<!-- dataTables.bootstrap4 -->
+	<script type="text/javascript" src="../../static/js/dataTables.bootstrap4.min.js"></script>
+
+	<!-- dataTables.select -->
+	<script type="text/javascript" src="../../static/js/dataTables.select.min.js"></script>
+
+	<!-- dataTables.responsive -->
+	<script type="text/javascript" src="../../static/js/dataTables.responsive.js"></script>
+
+	<script type="text/javascript" src="../../static/js/dataTables.buttons.min.js"></script>
+
+	<script type="text/javascript" src="../../static/js/buttons.flash.min.js"></script>
+
+	<script type="text/javascript" src="../../static/js/jszip.min.js"></script>
+
+	<script type="text/javascript" src="../../static/js/pdfmake.min.js"></script>
+
+	<script type="text/javascript" src="../../static/js/vfs_fonts.js"></script>
+
+	<script type="text/javascript" src="../../static/js/buttons.html5.min.js"></script>
+
+	<script type="text/javascript" src="../../static/js/buttons.print.min.js"></script>
+
+	<script src="http://d3js.org/d3.v3.js"></script>
+
 </body>
 </html>
