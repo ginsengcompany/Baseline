@@ -1784,7 +1784,7 @@
                     dataSrc: function (json) {
                         var a =[];
                         a.push(json);
-                        return a;
+                        return json;
                     }
                 },
                 responsive: true,
@@ -3923,7 +3923,7 @@
             var arrayInsert = {};
 
             arrayInsert.authToken = $('#accessToken').val();
-            arrayInsert.expiteToken = $('#dataScadenza').val();
+            arrayInsert.expiteToken = moment($('#dataScadenza').val()).format();
             arrayInsert.session = $('#cliendId').val();
 
             console.log(arrayInsert);
@@ -3943,6 +3943,7 @@
                 dataType: "json",
                 data: JSON.stringify(arrayInsert),
                 success: function (response) {
+                    console.log(resposne);
                     if (response.esito === true) {
                         $('#insertTokens').hide();
                         $('.modal-backdrop').remove();

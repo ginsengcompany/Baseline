@@ -208,12 +208,13 @@ public class TokenEndpoint {
                 long createToken = new Date().getTime();
                 long sessionExpireIn = 31536000000L;
                 sessionType = "A";
+                long tokenExpires = sessioneVO.getExpiteToken().getTime();
                 JSONObject session = new JSONObject();
                 session.put("clientId",sessioneVO.getSession());
                 jsonSession.put("access_token", sessioneVO.getAuthToken());
                 jsonSession.put("expires_in", sessionExpireIn);
                 jsonSession.put("create_token", createToken);
-                jsonSession.put("expires_token", sessioneVO.getExpiteToken());
+                jsonSession.put("expires_token", tokenExpires);
                 jsonSession.put("token_type", TokenType.BEARER.toString());
                 jsonSession.put("username", username);
                 jsonSession.put("session", session);
@@ -222,6 +223,7 @@ public class TokenEndpoint {
                 SessioniPresentation.create(jsonSession.toString());
 
                 if (esito.getReturnValue() == ReturnValues.SAVED) {
+                    esito.setEsito(true);
                     status = 200;
                 }                
         }
