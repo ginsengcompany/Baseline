@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/Baseline">
+
+  <Resource auth="Container" 
+            driverClassName="org.postgresql.Driver" 
+            maxIdle="10" 
+            maxTotal="25" 
+            name="jdbc/BaselineDB"
+            password="postgres" 
+            type="javax.sql.DataSource" 
+            url="jdbc:postgresql://localhost:5432/baseline"
+            username="postgres" 
+            validationQuery="select 1"/>
+</Context>
