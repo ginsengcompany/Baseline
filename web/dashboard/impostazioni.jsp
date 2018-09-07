@@ -67,7 +67,7 @@
             </div>
 
         </div>
-        
+
         <!--Card Token Applicativi -->
         <div class="col-lg-4 col-md-6 mb-4">
 
@@ -1273,9 +1273,9 @@
 
                                     <div>
 
-                                        <button type="button" id="modificaToken" onclick="openModalUptoken()"
-                                                class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light" data-toggle="modal" data-target="#updateToken"  data-tooltip="tooltip" data-placement="top" title="Modifica token"><i
-                                                class="fa fa-pencil mt-0"></i></button>
+                                        <button type="button" id="modificaToken" onclick="openModalDeletetoken()"
+                                                class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light" data-toggle="modal" data-target="#deleteToken"  data-tooltip="tooltip" data-placement="top" title="Elimina token"><i
+                                                class="fa fa-remove mt-0"></i></button>
                                         <button type="button" id="aggiungiToken" onclick="openModalIntoken()"
                                                 class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light" data-toggle="modal" data-target="#insertTokens" data-tooltip="tooltip" data-placement="top" title="Aggiungi token"><i
                                                 class="fa fa-plus mt-0"></i></button>
@@ -1304,7 +1304,7 @@
                                                     <th class="th-lg">Username</th>
                                                     <th class="th-lg">ClientId</th>
                                                     <th class="th-lg">sessionType</th>
-                                                    
+
                                                 </tr>
                                             </thead>
 
@@ -1387,6 +1387,40 @@
                         <button type="submit" class="btn btn-primary waves-effect waves-light" name="submit" value="Submit">Salva</button>
                     </div>
                 </form>   
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+
+    <!--Modal Delete Token-->
+    <div class="modal fade show" id="deleteToken" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 17px;">
+        <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+            <!--Content-->
+            <div class="modal-content">
+
+                <!--Header-->
+                <div class="modal-header">
+                    <img src="static/img/key.png" class="rounded-circle img-responsive" alt="Avatar photo">
+                </div>
+                <!--Body-->
+                <div class="modal-body text-center mb-1">
+
+                    <h5 class="mt-1 mb-2">Sei sicuro di eliminare questo token ?</h5>
+
+                    <form id="deleteTokens">
+                        <div class="md-form" hidden>
+                            <i class="fa fa-address-card prefix "></i>
+                            <input type="text" id="tokenid" class="form-control form-control-sm" name="tokenid" required>
+                            <label  for="tokenid">Id</label>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" name="submit" class="btn btn-primary waves-effect waves-light">Si, Accetto.</button>
+                            <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">No, Annulla.</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
             <!--/.Content-->
         </div>
@@ -1772,7 +1806,7 @@
 
                 }
             });
-            
+
             tabTokens = $('#tabTokens').DataTable({
 
                 ajax: {
@@ -1782,7 +1816,7 @@
                         'Content-Type': 'application/json',
                         'Authorization': "Bearer " + access_token},
                     dataSrc: function (json) {
-                        var a =[];
+                        var a = [];
                         a.push(json);
                         return json;
                     }
@@ -1794,18 +1828,23 @@
                 info: false,
                 columns: [
                     {'data': "accessToken"},
-                    {'data': "expiresIn",visible: false},
-                    {'data': "createToken"},
-                    {'data': "expiresToken","render": function (data) {
+                    {'data': "expiresIn", visible: false},
+                    {'data': "createToken", "render": function (data) {
                             moment.locale('it');
                             var d = new Date(data);
-                            var a = moment(d); 
+                            var a = moment(d);
                             return a.format('LLLL');
                         }},
-                    {'data': "tokenType",visible: false},
+                    {'data': "expiresToken", "render": function (data) {
+                            moment.locale('it');
+                            var d = new Date(data);
+                            var a = moment(d);
+                            return a.format('LLLL');
+                        }},
+                    {'data': "tokenType", visible: false},
                     {'data': "username"},
                     {'data': "session.clientId"},
-                    {'data': "sessionType",visible: false}
+                    {'data': "sessionType", visible: false}
                 ]
             });
 
@@ -1814,7 +1853,7 @@
                     $(this).removeClass('selected');
                     $('#modificaToken').prop('disabled', true);
                 } else {
-                    tabGruppi.$('tr.selected').removeClass('selected');
+                    tabTokens.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                     $('#modificaToken').prop('disabled', false);
                     ;
@@ -1823,7 +1862,7 @@
 
             $('#tabTokens tbody').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');
-                var row = tabGruppi.row(tr);
+                var row = tabTokens.row(tr);
 
                 if (row.child.isShown()) {
                     // This row is already open - close it
@@ -1835,45 +1874,45 @@
                     tr.addClass('shown');
                 }
             });
-            
+
             function makeid() {
                 var text = "";
                 var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
                 for (var i = 0; i < 5; i++)
-                     text += possible.charAt(Math.floor(Math.random() * possible.length));
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-                    return text;
+                return text;
             }
-            
+
             document.getElementById('jwtRandom').addEventListener(
-             'click',
-            function (event) {
-                event.preventDefault();
-                document.getElementById('accessToken').value = md5(makeid());
-            }
+                    'click',
+                    function (event) {
+                        event.preventDefault();
+                        document.getElementById('accessToken').value = md5(makeid());
+                    }
             );
 
         });
-        
-        function setModalGroup(){
-            document.getElementById('alertSuccInGp').style.display = 'none'; 
+
+        function setModalGroup() {
+            document.getElementById('alertSuccInGp').style.display = 'none';
             document.getElementById('alertErrInGp').style.display = 'none';
-            document.getElementById('alertSuccUpGp').style.display = 'none'; 
+            document.getElementById('alertSuccUpGp').style.display = 'none';
             document.getElementById('alertErrUpGp').style.display = 'none';
         }
-        
-        function setModalUser(){
-            document.getElementById('alertSuccIn').style.display = 'none'; 
+
+        function setModalUser() {
+            document.getElementById('alertSuccIn').style.display = 'none';
             document.getElementById('alertErrIn').style.display = 'none';
-            document.getElementById('alertSuccUp').style.display = 'none'; 
+            document.getElementById('alertSuccUp').style.display = 'none';
             document.getElementById('alertErrUp').style.display = 'none';
         }
-        
-        function setModaltoken(){
-            document.getElementById('alertSuccIn').style.display = 'none'; 
+
+        function setModaltoken() {
+            document.getElementById('alertSuccIn').style.display = 'none';
             document.getElementById('alertErrIn').style.display = 'none';
-            document.getElementById('alertSuccUp').style.display = 'none'; 
+            document.getElementById('alertSuccUp').style.display = 'none';
             document.getElementById('alertErrUp').style.display = 'none';
         }
 
@@ -3907,17 +3946,25 @@
 
 
         });
-        
-        function openModalUptoken (){
+
+        function openModalDeletetoken() {
             
+            var ids1 = $.map(tabTokens.rows('.selected').data(), function (item) {
+                return item;
+            });
+            arrayUtenti = ids1;
             
+            console.log(arrayUtenti);
+
+            $('#tokenid').val(arrayUtenti[0].accessToken);
+
         };
-        
-        function openModalIntoken (){
-            
-            
+
+        function openModalIntoken() {
+
+
         };
-        
+
         $('#tokenFormIns').on('submit', function () {
 
             var arrayInsert = {};
@@ -3943,7 +3990,6 @@
                 dataType: "json",
                 data: JSON.stringify(arrayInsert),
                 success: function (response) {
-                    console.log(resposne);
                     if (response.esito === true) {
                         $('#insertTokens').hide();
                         $('.modal-backdrop').remove();
@@ -3964,6 +4010,48 @@
                 }
             });
 
+            return false;
+
+        });
+        
+        $('#deleteTokens').on('submit', function () {
+
+            var arrayDelete = {};
+            
+            arrayDelete.id = $('#tokenid').val();
+            
+            var url_string = document.URL; 
+            
+            var url = new URL(url_string);
+            var access_token = url.searchParams.get("authToken");
+            
+            $.ajax({
+            url: '../rest/token/applicativi/'+arrayDelete.id,
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " +access_token
+            },
+            dataType: "json",
+            data: JSON.stringify(arrayDelete),
+            success: function (response) {
+               if(response.esito === true){  
+                   $('#deleteToken').hide();
+                   $('.modal-backdrop').remove();
+                   tabTokens.ajax.reload();
+                   document.getElementById('alertSuccDe').style.display = 'block';
+               }
+            },
+            failure: function (response) { 
+                if (response.status === 401 || response.status === 400 || response.status === 500) {  
+                    $('#deleteToken').hide();
+                    $('.modal-backdrop').remove();
+                    tabTokens.ajax.reload();
+                    document.getElementById('alertErrDe').style.display = 'block';
+                }      
+            }
+            });
+     
             return false;
 
         });

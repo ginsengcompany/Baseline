@@ -6,6 +6,7 @@
 package it.gesan.api;
 
 import it.gesan.module.anagrafica.presentation.AnagraficaPresentation;
+import it.gesan.module.anagrafica.vo.AnagraficaVO;
 import it.gesan.module.dispositivi.presentation.DispositiviPresentation;
 import it.gesan.module.dispositivi.vo.DispositivoVO;
 import it.gesan.module.utenti.presentation.UtentiPresentation;
@@ -30,9 +31,11 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -199,11 +202,11 @@ public class TokenEndpoint {
     public Response postToken(SessioneVO sessioneVO) throws JSONException, IOException {
         String username = securityContext.getUserPrincipal().getName();
         int status = 401;
-       
-        EsitoBean esito = UtentiPresentation.getUtenteByUsername(username);
+        IEsitoBean esito = new EsitoBean("Non si hanno i permessi per eseguire l'operazione");
+        VerificaPermessiBO vpBO = new VerificaPermessiBO("utente", username, Sezioni.GRUPPI);
 
-        if (esito.getReturnValue() == ReturnValues.FOUND) {
-             
+        if (vpBO.verificaPermessiInserimento()) {
+                status = 400;
                 JSONObject jsonSession = new JSONObject();
                 long createToken = new Date().getTime();
                 long sessionExpireIn = 31536000000L;
@@ -220,16 +223,46 @@ public class TokenEndpoint {
                 jsonSession.put("session", session);
                 jsonSession.put("session_type", sessionType);
 
-                SessioniPresentation.create(jsonSession.toString());
+                esito = SessioniPresentation.create1(jsonSession.toString());
+               
 
                 if (esito.getReturnValue() == ReturnValues.SAVED) {
-                    esito.setEsito(true);
-                    status = 200;
-                }                
+                status = 200;
+            }
         }
 
         return Response.status(status).entity(esito).build();
     }
+    
+    
+    @DELETE
+    @Path("applicativi/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response delete(@PathParam("id") String id) throws JSONException, IOException {
+        String username = securityContext.getUserPrincipal().getName();
+        
+        IEsitoBean esito = UtentiPresentation.getUtenteByUsername(username);
+        //JSONObject jsonUtente = new JSONObject();
+        
+        if(esito.getReturnValue() == ReturnValues.FOUND){
+            UtenteVO utenteVO = (UtenteVO)esito.getObject();
+            SessioneVO sVO = new SessioneVO();
+            
+            sVO.setAuthToken(id);
+            
+            esito = SessioniPresentation.delete1(sVO);
+
+            if(esito.getReturnValue() == ReturnValues.SAVED){
+                esito.setEsito(true);
+            }            
+            //jsonUtente = new JSONObject(mapper.writeValueAsString(utenteVO));
+        }
+        //String utente = jsonUtente.toString();
+
+
+        return Response.status(200).entity(esito).build();
+    } 
     
     // ...
     private boolean checkClientId(String clientId) {
