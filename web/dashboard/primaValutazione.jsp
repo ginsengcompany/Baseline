@@ -151,7 +151,7 @@
             
             
             $.ajax({
-                url: '../rest/servizi/bpnm',
+                url: '../rest/servizi/bpmn',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -161,7 +161,7 @@
                 data: JSON.stringify(arrayInsert),
                 success: function (response) {
                     
-                    consle.log(response);
+                    
                     
                 },
                 failure: function (response) {
