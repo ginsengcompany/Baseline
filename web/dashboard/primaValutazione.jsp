@@ -144,7 +144,32 @@
         }
 
         $('#uploadPdta').on('submit', function () {
-            loadFileAsText();
+            var fileToLoad = document.getElementById("pdta").files[0];
+            console.log(fileToLoad);
+            
+            var arrayInsert = {'descrizioneServizio': fileToLoad.name, 'codiceAzienda': '0000', 'id': '0000', 'codiceServizio': '0000'};
+            
+            
+            $.ajax({
+                url: '../rest/servizi/bpnm',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + access_token
+                },
+                dataType: "json",
+                data: JSON.stringify(arrayInsert),
+                success: function (response) {
+                    
+                    consle.log(response);
+                    
+                },
+                failure: function (response) {
+                    
+                }
+            });
+            
+            //loadFileAsText();
             return false;
         });
 

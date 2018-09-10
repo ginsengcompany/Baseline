@@ -5,6 +5,7 @@
  */
 package it.gesan.api;
 
+import it.gesan.bpmn.core.processdefinition.di.BPMNDiagram;
 import it.gesan.module.icdix.presentation.IcdixPresentation;
 import it.gesan.module.servizi.presentation.ServiziPresentation;
 import it.gesan.module.servizi.vo.ServizioVO;
@@ -33,6 +34,16 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jettison.json.JSONException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 /**
  *
@@ -177,4 +188,52 @@ public class ServiziResources {
         }
         return Response.status(200).entity(returnValue).build();
     }    
+    
+    @POST
+    @Path("bpmn")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response readBPMN(ServizioVO servizioVO) throws JSONException, IOException {
+        String username = securityContext.getUserPrincipal().getName();
+        
+        IEsitoBean esito = UtentiPresentation.getUtenteByUsername(username);
+        //JSONObject jsonUtente = new JSONObject();
+        
+        String path = servizioVO.getDescrizioneServizio();
+        XMLInputFactory factory = XMLInputFactory.newInstance();
+        
+        if(esito.getReturnValue() == ReturnValues.FOUND){
+            try {
+			JAXBContext xpdlContext = JAXBContext.newInstance(it.gesan.bpmn.core.processdefinition.classes.Definitions.class); // Contexto JAXB con la clase que corresponde al root del xml 
+			Unmarshaller unmarshallerXpdl = xpdlContext.createUnmarshaller();
+			File file = new File(path);
+			if(file.exists()){
+				XMLStreamReader reader = factory.createXMLStreamReader(new FileReader(path)); // XML reader que usara JAXB el cual apunta al archivo a leer
+				JAXBElement<it.gesan.bpmn.core.processdefinition.classes.Definitions> jaxbPackage = unmarshallerXpdl.unmarshal(reader,it.gesan.bpmn.core.processdefinition.classes.Definitions.class); //Aca es cuando efectivamente des-serializa
+				
+				it.gesan.bpmn.core.processdefinition.classes.Definitions definitions = jaxbPackage.getValue(); // Aca obtengo el elemento root del xml 
+				java.util.List<BPMNDiagram> diagrams = definitions.getBPMNDiagram();
+				System.out.println(definitions.getTargetNamespace());
+				
+				for(BPMNDiagram diagram: diagrams){
+					
+					System.out.println("Id: " + diagram.getId());
+					
+				}
+				
+				
+			}else{
+				System.out.println(file.getAbsolutePath());					
+			}
+			
+		} catch (JAXBException | FileNotFoundException | XMLStreamException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+            }
+        }
+        //String utente = jsonUtente.toString();
+
+
+        return Response.status(200).entity(esito).build();
+    }
 }

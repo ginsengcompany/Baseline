@@ -5,6 +5,7 @@
 
 package it.gesan.bpmn.core.processdefinition.classes;
 
+import it.gesan.bpmn.core.processdefinition.di.BPMNDiagram;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,6 +64,8 @@ public class Definitions {
     protected String exporterVersion;
     @XmlAnyAttribute
     private Map<QName, String> otherAttributes = new HashMap<QName, String>();
+    @XmlElement(name = "BPMNDiagram", namespace = "http://www.omg.org/spec/BPMN/20100524/DI")
+    protected List<BPMNDiagram> bpmnDiagram;
 
 
     public List<Import> getImport() {
@@ -177,6 +180,13 @@ public class Definitions {
 
     public Map<QName, String> getOtherAttributes() {
         return otherAttributes;
+    }
+    
+    public List<BPMNDiagram> getBPMNDiagram() {
+        if (bpmnDiagram == null) {
+            bpmnDiagram = new ArrayList<BPMNDiagram>();
+        }
+        return this.bpmnDiagram;
     }
 
 }
