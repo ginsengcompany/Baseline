@@ -177,26 +177,4 @@ public class ServiziResources {
         }
         return Response.status(200).entity(returnValue).build();
     }    
-    
-    @POST
-    @Path("bpmn")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response readBPMN(ServizioVO servizioVO) throws JSONException, IOException {
-        String username = securityContext.getUserPrincipal().getName();
-        
-        IEsitoBean esito = UtentiPresentation.getUtenteByUsername(username);
-        //JSONObject jsonUtente = new JSONObject();
-        
-        String path = "E:\\Java Project\\Baseline\\src\\java\\it\\gesan\\bpmn\\core\\processdefinition\\diagram.bpmn";
-        
-        
-        if(esito.getReturnValue() == ReturnValues.FOUND){
-           
-        }
-        //String utente = jsonUtente.toString();
-
-
-        return Response.status(200).entity(esito).build();
-    }
 }

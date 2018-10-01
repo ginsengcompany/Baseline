@@ -147,20 +147,25 @@
             var fileToLoad = document.getElementById("pdta").files[0];
             console.log(fileToLoad);
             
-            var arrayInsert = {'descrizioneServizio': fileToLoad.name, 'codiceAzienda': '0000', 'id': '0000', 'codiceServizio': '0000'};
-            
+            var data = new FormData();
+                data.append( 'deployment-name', 'pdta' );
+                data.append( 'enable-duplicate-filtering', true );
+                data.append( 'deploy-changed-only', true );
+                data.append( 'bpmn', fileToLoad );
+                
             
             $.ajax({
-                url: '../rest/servizi/bpmn',
+                url: 'http://localhost:8080/engine-rest/deployment/create',
                 method: 'POST',
+                processData: false,
+                contentType: false,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': "Bearer " + access_token
+                    'Accept' : 'application/json'
                 },
-                dataType: "json",
-                data: JSON.stringify(arrayInsert),
+                data: data,
                 success: function (response) {
                     
+                    console.log(response);
                     
                     
                 },
