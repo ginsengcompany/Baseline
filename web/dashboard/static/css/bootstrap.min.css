@@ -270,7 +270,7 @@ button, select {
 	border-style: none
 }
 
-input[type=radio], input[type=checkbox] {
+input[type=radio]{
 	box-sizing: border-box;
 	padding: 0
 }

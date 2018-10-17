@@ -249,7 +249,7 @@ button, select {
     border-style: none
 }
 
-input[type=checkbox], input[type=radio] {
+input[type=radio] {
     box-sizing: border-box;
     padding: 0
 }
@@ -17683,7 +17683,8 @@ body.scrollable {
     }
 
     .modal .modal-dialog.modal-right {
-        right: 0
+        right: 0;
+        height: auto;
     }
 
     .modal .modal-dialog.modal-bottom {
@@ -21030,7 +21031,7 @@ a.pswp__share--download:hover {
     vertical-align: middle
 }
 
-[type=checkbox], [type=radio] {
+[type=radio] {
     position: absolute;
     left: -9999px;
     visibility: hidden
@@ -21136,7 +21137,7 @@ a.pswp__share--download:hover {
     background: linear-gradient(40deg, #45cafc, #303f9f) !important
 }
 
-[type=checkbox], [type=radio] {
+[type=radio] {
     position: absolute;
     left: -9999px;
     visibility: hidden

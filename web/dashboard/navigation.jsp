@@ -3,8 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <link rel="apple-touch-icon" sizes="57x57"
@@ -65,8 +64,10 @@
         <link href="static/css/buttons.dataTables.min.css" rel="stylesheet">
 
         <link href="static/css/dataTables.checkboxes.css" rel="stylesheet" />
-        
+
         <link rel="stylesheet" href="static/css/leaflet.css" rel="stylesheet" />
+        
+        <script src="static/js/angular.min.js"></script>
 
     </head>
     <%
@@ -101,33 +102,14 @@
                     </ul>
                     <ul class="collapsible collapsible-accordion">
                         <li><a class="collapsible-header waves-effect arrow-r"><i
-                                    class="fa fa-chevron-right"></i>MMG/PLS/Altre Strutture<i
+                                    class="fa fa-chevron-right"></i>WorkFlow Engine<i
                                     class="fa fa-angle-down rotate-icon"></i></a>
                             <div class="collapsible-body">
                                 <ul>
-                                    <li><a href="primaValutazione.jsp?<%=url_string%>" class="waves-effect">Prima Valutazione</a></li>
-                                    </li>
-                                </ul>
-                            </div></li>
-                    </ul>
-                    <ul class="collapsible collapsible-accordion">
-                        <li><a class="collapsible-header waves-effect arrow-r"><i
-                                    class="fa fa-chevron-right"></i>Amb.Nefrologico ( Centro Nefrologico di Riferimenro)<i
-                                    class="fa fa-angle-down rotate-icon"></i></a>
-                            <div class="collapsible-body">
-                                <ul>
-                                    <li><a href="secondaValutazione.jsp?<%=url_string%>" class="waves-effect">Valutazione Specialistica</a></li>
-                                    </li>
-                                </ul>
-                            </div></li>
-                    </ul>
-                    <ul class="collapsible collapsible-accordion">
-                        <li><a class="collapsible-header waves-effect arrow-r"><i
-                                    class="fa fa-chevron-right"></i>Strutture Amb.Malattia Renale Avanzata/Orientamento alla Terapia SostitutivaUrgenza<i
-                                    class="fa fa-angle-down rotate-icon"></i></a>
-                            <div class="collapsible-body">
-                                <ul>
-
+                                    <li><a href="primaValutazione.jsp?<%=url_string%>" class="waves-effect">Deployment BPMN</a></li>
+                                    <li><a href="arruolaPaziente.jsp?<%=url_string%>" class="waves-effect">Arruola Paziente</a></li>
+                                    <li><a href="visualizzaStato.jsp?<%=url_string%>" class="waves-effect">Visualizza Stato paziente</a></li>
+                                    <li><a href="avanzamentoStato.jsp?<%=url_string%>" class="waves-effect">Avanzamento Stato paziente</a></li>
                                 </ul>
                             </div></li>
                     </ul>
@@ -204,7 +186,19 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="static/js/compiled.min.js"></script>
     <script>
-        
+
+        var app = angular.module("myApp", []);
+        var SCOPE;
+        app.controller("myCtrl", function ($scope,$compile) {
+            $scope.firstName = "baseline";
+            $scope.lastName = "2018";
+            SCOPE = $scope;
+            $scope.compile = function (elem_from, elem_to) {
+                var content = $compile(angular.element(elem_from))($scope);
+                angular.element(elem_to).append(content);
+            }
+        });
+
         $(document).ajaxError(function (event, jqxhr, settings, exception) {
             if (jqxhr.status === 401) {
                 location.href = '/Baseline';
@@ -221,7 +215,7 @@
             var url = new URL(url_string);
             var access_token = url.searchParams.get("authToken");
             var username = url.searchParams.get("username");
-            
+
             var queryParams = {
                 authToken: access_token,
                 username: username
@@ -240,7 +234,7 @@
             me.authToken = queryParams.authToken;
             me.username = queryParams.username;
             var encodedToken = "Bearer " + me.authToken;
-            
+
             $.ajax({
                 url: '../rest/users/' + me.username,
                 method: 'GET',
@@ -255,7 +249,7 @@
 
                 },
                 failure: function (response) {
-                    
+
                     if (response.status === 401) {
                         location.href = '/Baseline';
                     }
@@ -296,11 +290,11 @@
     <script type="text/javascript" src="static/js/moment.js"></script>
 
     <script type="text/javascript" src="static/js/dataTables.checkboxes.min.js"></script>
-    
+
     <script type="text/javascript" src="static/js/bpmn-viewer.development.js"></script>
-    
+
     <script type="text/javascript" src="static/js/leaflet.js"></script>
-    
+
     <script type="text/javascript" src="static/js/md5.js"></script>
 
 </body>
