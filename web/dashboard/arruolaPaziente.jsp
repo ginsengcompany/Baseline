@@ -23,11 +23,6 @@
                 <option value="" disabled selected>Seleziona BPMN</option>
             </select>
 
-            <div class="md-form">
-                <input type="number" id="prestazione" class="form-control form-control-sm" name="prestazione" required>
-                <label  for="prestazione">Prestazione</label>
-            </div>
-
             <button type="button" name="aza" class="btn btn-primary" onclick="arruola()">Arruola
                 <i class="fa fa-upload ml-2"></i>
             </button>
@@ -159,7 +154,6 @@
                     "id": {"type": "String", "value": paziente.id, "valueInfo": {}},
                     "localitaNascita": {"type": "String", "value": paziente.localitaNascita, "valueInfo": {}},
                     "nome": {"type": "String", "value": paziente.nome, "valueInfo": {}},
-                    "prestazione": {"type": "Long", "value": parseInt($('#prestazione').val()), "valueInfo": {}},
                     "provinciaNascita": {"type": "String", "value": paziente.provinciaNascita, "valueInfo": {}}
                 }
             };

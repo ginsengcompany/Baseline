@@ -44,7 +44,7 @@
                 <option value="" disabled selected>Seleziona Paziente</option>
             </select>
 
-            <div id="canvas" style="height: 500px;"></div> 
+            <div id="canvas" style="height: 1000px;"></div> 
 
             <button type="button" id="avanza" name="submit" class="btn btn-primary" onclick="openModal()" data-toggle="modal" data-target="#fullHeightModalRight"  style="display: none">Avanzamento<i class="fa fa-upload ml-2"></i></button>
         </div>
@@ -399,67 +399,120 @@
                     $("#renderForm").html("");
 
                     $.ajax({
-                        url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/claim',
+                        url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/assignee',
                         method: 'POST',
                         processData: false,
                         contentType: false,
-                        data: JSON.stringify(dati),
+                        data: JSON.stringify({"userId": null}),
                         dataType: "json",
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
-                        success: function (response) {
+                        success: function (response1) {
 
                             $.ajax({
-                                url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/rendered-form',
-                                method: 'GET',
+                                url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/claim',
+                                method: 'POST',
                                 processData: false,
                                 contentType: false,
-                                dataType: "text",
+                                data: JSON.stringify(dati),
+                                dataType: "json",
                                 headers: {
-                                    'Accept': 'application/xhtml+xml'
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json'
                                 },
-                                success: function (data) {
-
-                                    $("#renderForm").html("");
-                                    SCOPE.compile(data, document.getElementById("renderForm"));
+                                success: function (response) {
 
                                     $.ajax({
-                                        url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/form-variables',
+                                        url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/rendered-form',
                                         method: 'GET',
                                         processData: false,
                                         contentType: false,
+                                        dataType: "text",
                                         headers: {
-                                            'Content-Type': 'application/json',
-                                            'Accept': 'application/json'
+                                            'Accept': 'application/xhtml+xml'
                                         },
-                                        success: function (datas) {
+                                        success: function (data) {
 
-                                            $("[cam-variable-name=prestazione]").val(datas.prestazione.value);
-                                            $("[cam-variable-name=approvato]").val(datas.approvato.value);
-                                            $("[cam-variable-name=dataNascita]").val(datas.dataNascita.value);
-                                            $("[cam-variable-name=cognome]").val(datas.cognome.value);
-                                            $("[cam-variable-name=provinciaNascita]").val(datas.provinciaNascita.value);
-                                            $("[cam-variable-name=nome]").val(datas.nome.value);
-                                            $("[cam-variable-name=id]").val(datas.id.value);
-                                            $("[cam-variable-name=localitaNascita]").val(datas.localitaNascita.value);
+                                            $("#renderForm").html("");
+                                            SCOPE.compile(data, document.getElementById("renderForm"));
+
+                                            $.ajax({
+                                                url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/form-variables',
+                                                method: 'GET',
+                                                processData: false,
+                                                contentType: false,
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                    'Accept': 'application/json'
+                                                },
+                                                success: function (datas) {
+                                                    
+                                                    if(datas.approfondimento.value === '-'){
+                                                        $("[cam-variable-name=dataNascita]").val(datas.dataNascita.value);
+                                                        $("[cam-variable-name=cognome]").val(datas.cognome.value);
+                                                        $("[cam-variable-name=provinciaNascita]").val(datas.provinciaNascita.value);
+                                                        $("[cam-variable-name=nome]").val(datas.nome.value);
+                                                        $("[cam-variable-name=id]").val(datas.id.value);
+                                                        $("[cam-variable-name=localitaNascita]").val(datas.localitaNascita.value);
+                                                        $("[cam-variable-name=mmg]").val(datas.mmg.value);
+                                                        $("[cam-variable-name=primaValutazione]").val(datas.primaValutazione.value);
+                                                    }
+                                                    
+                                                    if(datas.valutazioneSpecialistica.value === '-'){
+                                                        $("[cam-variable-name=dataNascita]").val(datas.dataNascita.value);
+                                                        $("[cam-variable-name=cognome]").val(datas.cognome.value);
+                                                        $("[cam-variable-name=provinciaNascita]").val(datas.provinciaNascita.value);
+                                                        $("[cam-variable-name=nome]").val(datas.nome.value);
+                                                        $("[cam-variable-name=id]").val(datas.id.value);
+                                                        $("[cam-variable-name=localitaNascita]").val(datas.localitaNascita.value);
+                                                        $("[cam-variable-name=mmg]").val(datas.mmg.value);
+                                                        $("[cam-variable-name=primaValutazione]").val(datas.primaValutazione.value);
+                                                        $("[cam-variable-name=approfondimento]").val(datas.approfondimento.value);
+                                                        $("[cam-variable-name=ambNefrologico]").val(datas.ambNefrologico.value);
+                                                    }
+                                                    
+                                                    if(datas.presaInCarico.value === '-'){
+                                                        $("[cam-variable-name=dataNascita]").val(datas.dataNascita.value);
+                                                        $("[cam-variable-name=cognome]").val(datas.cognome.value);
+                                                        $("[cam-variable-name=provinciaNascita]").val(datas.provinciaNascita.value);
+                                                        $("[cam-variable-name=nome]").val(datas.nome.value);
+                                                        $("[cam-variable-name=id]").val(datas.id.value);
+                                                        $("[cam-variable-name=localitaNascita]").val(datas.localitaNascita.value);
+                                                        $("[cam-variable-name=mmg]").val(datas.mmg.value);
+                                                        $("[cam-variable-name=primaValutazione]").val(datas.primaValutazione.value);
+                                                        $("[cam-variable-name=approfondimento]").val(datas.approfondimento.value);
+                                                        $("[cam-variable-name=ambNefrologico]").val(datas.ambNefrologico.value);
+                                                        $("[cam-variable-name=valutazioneSpecialistica]").val(datas.valutazioneSpecialistica.value);
+                                                        $("[cam-variable-name=mrc3b]").val(datas.mrc3b.value);
+                                                        $("[cam-variable-name=monitoraggioPaziente]").val(datas.monitoraggioPaziente.value);
+                                                        $("[cam-variable-name=ambMalattia]").val(datas.ambMalattia.value);
+                                                    }
+
+                                                },
+                                                failure: function (datas) {
+
+                                                }
+                                            });
 
                                         },
-                                        failure: function (datas) {
+                                        failure: function (data) {
 
                                         }
                                     });
 
                                 },
-                                failure: function (data) {
-
-                                }
+                                error: handleError
                             });
 
                         },
-                        error: handleError
+                        failure: function (datas1) {
+
+                        }
                     });
+
+
                 }
 
                 $('#submitForm').click(function () {
@@ -468,22 +521,14 @@
 
                     var switchLab = myForm.childNodes[0][0].name;
 
-                    if (switchLab === 'id') {
-                        
-                        var value = "";
-                        
-                        if ($("[cam-variable-name=approvato]").is(":checked"))
-                        {
-                            value = true;
-                        }
-                        else{
-                             value = false;
-                        }
+                    if (switchLab === 'mmg') {
+
+                        var value = $("[cam-variable-name=mmg]").val();
 
                         var jsonObj = {
                             variables: {
-                                approvato: {
-                                    type: "Boolean",
+                                mmg: {
+                                    type: "String",
                                     value: value,
                                     valueInfo: {}
                                 }
@@ -515,13 +560,13 @@
                         });
 
                     } 
-                    else if (switchLab === 'prestazione') {
+                    else if (switchLab === 'primaValutazione') {
 
                         var jsonPrest = {
                             variables: {
-                                prestazione: {
-                                    type: "Long",
-                                    value: $("[cam-variable-name=prestazione]").val(),
+                                primaValutazione: {
+                                    type: "String",
+                                    value: $("[cam-variable-name=primaValutazione]").val(),
                                     valueInfo: {}
                                 }
                             }
@@ -552,12 +597,405 @@
                         });
 
                     }
+                    else if (switchLab === 'ambNefrologico') {
+
+                        var jsonPrest = {
+                            variables: {
+                                ambNefrologico: {
+                                    type: "String",
+                                    value: $("[cam-variable-name=ambNefrologico]").val(),
+                                    valueInfo: {}
+                                }
+                            }
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: JSON.stringify(jsonPrest),
+                            dataType: "json",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            success: function (response) {
+
+                                $("#renderForm").html("");
+                                $('#fullHeightModalRight').modal('hide');
+                                $('.modal-backdrop').remove();
+                                $("#modalSuccess").click();
+
+                            },
+                            faliure: function (response) {
+
+                            }
+                        });
+
+                    } 
+                    else if (switchLab === 'mrc3b') {
+
+                        var jsonPrest = {
+                            variables: {
+                                mrc3b: {
+                                    type: "String",
+                                    value: $("[cam-variable-name=mrc3b]").val(),
+                                    valueInfo: {}
+                                }
+                            }
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: JSON.stringify(jsonPrest),
+                            dataType: "json",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            success: function (response) {
+
+                                $("#renderForm").html("");
+                                $('#fullHeightModalRight').modal('hide');
+                                $('.modal-backdrop').remove();
+                                $("#modalSuccess").click();
+
+                            },
+                            faliure: function (response) {
+
+                            }
+                        });
+
+                    }
+                    else if (switchLab === 'mrc13') {
+
+                        var jsonPrest = {
+                            variables: {
+                                mrc13: {
+                                    type: "String",
+                                    value: $("[cam-variable-name=mrc13]").val(),
+                                    valueInfo: {}
+                                }
+                            }
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: JSON.stringify(jsonPrest),
+                            dataType: "json",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            success: function (response) {
+
+                                $("#renderForm").html("");
+                                $('#fullHeightModalRight').modal('hide');
+                                $('.modal-backdrop').remove();
+                                $("#modalSuccess").click();
+
+                            },
+                            faliure: function (response) {
+
+                            }
+                        });
+
+                    }
+                    else if (switchLab === 'condivisionePercorsoOne') {
+
+                        var jsonPrest = {
+                            variables: {
+                                condivisionePercorsoOne: {
+                                    type: "String",
+                                    value: $("[cam-variable-name=condivisionePercorsoOne]").val(),
+                                    valueInfo: {}
+                                }
+                            }
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: JSON.stringify(jsonPrest),
+                            dataType: "json",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            success: function (response) {
+
+                                $("#renderForm").html("");
+                                $('#fullHeightModalRight').modal('hide');
+                                $('.modal-backdrop').remove();
+                                $("#modalSuccess").click();
+
+                            },
+                            faliure: function (response) {
+
+                            }
+                        });
+
+                    }
+                    else if (switchLab === 'monitoraggioPaziente') {
+
+                        var value = "";
+                        
+                        if ($("[cam-variable-name=mrcTwo]").is(":checked"))
+                        {
+                            value = true;
+                        }
+                        else{
+                             value = false;
+                        }
+                        
+                        var jsonObj = {
+                            variables: {
+                                monitoraggioPaziente: {
+                                    type: "String",
+                                    value: $("[cam-variable-name=monitoraggioPaziente]").val(),
+                                    valueInfo: {}
+                                },
+                                mrcTwo: {
+                                    type: "Boolean",
+                                    value: value,
+                                    valueInfo: {}
+                                }
+                            }
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: JSON.stringify(jsonObj),
+                            dataType: "json",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            success: function (response) {
+
+                                $("#renderForm").html("");
+                                $('#fullHeightModalRight').modal('hide');
+                                $('.modal-backdrop').remove();
+                                $("#modalSuccess").click();
+
+                            },
+                            faliure: function (response) {
+
+                            }
+                        });
+
+                    }
+                    else if (switchLab === 'ambMalattia') {
+
+                        var jsonObj = {
+                            variables: {
+                                ambMalattia: {
+                                    type: "String",
+                                    value: $("[cam-variable-name=ambMalattia]").val(),
+                                    valueInfo: {}
+                                }
+                            }
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: JSON.stringify(jsonObj),
+                            dataType: "json",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            success: function (response) {
+
+                                $("#renderForm").html("");
+                                $('#fullHeightModalRight').modal('hide');
+                                $('.modal-backdrop').remove();
+                                $("#modalSuccess").click();
+
+                            },
+                            faliure: function (response) {
+
+                            }
+                        });
+
+                    }
+                    else if (myForm.childNodes[0][8].name === 'approfondimento') {
+
+                        var value = "";
+                        var value1 = "";
+                        
+                        if ($("[cam-variable-name=mrc]").is(":checked"))
+                        {
+                            value = true;
+                        }
+                        else{
+                             value = false;
+                        }
+                        
+                        if ($("[cam-variable-name=urgenza]").is(":checked"))
+                        {
+                            value1 = true;
+                        }
+                        else{
+                             value1 = false;
+                        }
+                        
+                        var jsonObj = {
+                            variables: {
+                                approfondimento: {
+                                    type: "String",
+                                    value: $("[cam-variable-name=approfondimento]").val(),
+                                    valueInfo: {}
+                                },
+                                mrc: {
+                                    type: "Boolean",
+                                    value: value,
+                                    valueInfo: {}
+                                },
+                                urgenza: {
+                                    type: "Boolean",
+                                    value: value1,
+                                    valueInfo: {}
+                                }
+                            }
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: JSON.stringify(jsonObj),
+                            dataType: "json",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            success: function (response) {
+
+                                $("#renderForm").html("");
+                                $('#fullHeightModalRight').modal('hide');
+                                $('.modal-backdrop').remove();
+                                $("#modalSuccess").click();
+
+                            },
+                            faliure: function (response) {
+
+                            }
+                        });
+
+                    }
+                    else if (myForm.childNodes[0][10].name === 'valutazioneSpecialistica') {
+
+                        var value = "";
+                        
+                        if ($("[cam-variable-name=mrcOne]").is(":checked"))
+                        {
+                            value = true;
+                        }
+                        else{
+                             value = false;
+                        }
+                        
+                        var jsonObj = {
+                            variables: {
+                                valutazioneSpecialistica: {
+                                    type: "String",
+                                    value: $("[cam-variable-name=valutazioneSpecialistica]").val(),
+                                    valueInfo: {}
+                                },
+                                mrcOne: {
+                                    type: "Boolean",
+                                    value: value,
+                                    valueInfo: {}
+                                }
+                            }
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: JSON.stringify(jsonObj),
+                            dataType: "json",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            success: function (response) {
+
+                                $("#renderForm").html("");
+                                $('#fullHeightModalRight').modal('hide');
+                                $('.modal-backdrop').remove();
+                                $("#modalSuccess").click();
+
+                            },
+                            faliure: function (response) {
+
+                            }
+                        });
+
+                    }
+                    else if (myForm.childNodes[0][13].name === 'presaInCarico') {
+                        
+                        var jsonObj = {
+                            variables: {
+                                presaInCarico: {
+                                    type: "String",
+                                    value: $("[cam-variable-name=presaInCarico]").val(),
+                                    valueInfo: {}
+                                }
+                            }
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: JSON.stringify(jsonObj),
+                            dataType: "json",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            success: function (response) {
+
+                                $("#renderForm").html("");
+                                $('#fullHeightModalRight').modal('hide');
+                                $('.modal-backdrop').remove();
+                                $("#modalSuccess").click();
+
+                            },
+                            faliure: function (response) {
+
+                            }
+                        });
+
+                    }
+                    
 
                 });
 
                 $('#centralModalSuccess').on('hidden.bs.modal', function () {
                     location.reload();
-                });
+                });           
 
     </script> 
 </main>

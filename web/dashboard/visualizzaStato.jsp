@@ -44,7 +44,7 @@
                         <option value="" disabled selected>Seleziona Paziente</option>
                     </select>
                     
-                    <div id="canvas" style="height: 500px;"></div> 
+                    <div id="canvas" style="height: 1000px;"></div> 
 
         </div>
 
