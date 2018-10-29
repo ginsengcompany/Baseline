@@ -72,7 +72,7 @@ public class Dati extends HttpServlet {
         CsvComuniReader comuni = new CsvComuniReader();
         Luogo luoghi = new Luogo();
         Gson gson = new Gson();
-        request.setAttribute("dati", gson.toJson(dati));
+        request.setAttribute("pm10", gson.toJson(dati.getPm10()));
         request.setAttribute("luoghi", gson.toJson(luoghi));
         request.setAttribute("comuni", gson.toJson(comuni.getComuni()));
         rd.forward(request, response);

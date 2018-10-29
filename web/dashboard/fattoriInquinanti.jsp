@@ -42,7 +42,7 @@
     </div>
     <script>
             var inquina, stazioni, comuni;
-            inquina = <%=request.getAttribute("dati")%>;
+            inquinaPm10 = <%=request.getAttribute("pm10")%>;
             stazioni = <%=request.getAttribute("luoghi")%>;
             comuni = <%=request.getAttribute("comuni")%>;
             var map = new L.map('map');
@@ -68,22 +68,19 @@
                 left: 'auto'
             };
             var spinner = new Spinner(optionsLoadBar).spin(document.getElementById("map"));
-            //map.spin(true);
             var inquinamentoPerStazioni = {};
             for(var prop in stazioni.luoghi){
                 inquinamentoPerStazioni[prop] = stazioni.luoghi[prop];
-                for(var pr in inquina){
-                    if(pr === "benzene" || pr === "pm2_5" || pr === "listaLuoghi")
-                        continue;
-                    for(var i=0; i < inquina[pr].length; i++){
-                        if(prop === inquina[pr][i].stazione){
+                for(var pr in inquinaPm10){
+                    for(var i=0; i < inquinaPm10[pr].length; i++){
+                        if(prop === inquinaPm10[pr][i].stazione){
                             inquinamentoPerStazioni[prop][pr] = {
-                                IQA : inquina[pr][i].IQA,
-                                color : inquina[pr][i].color,
-                                stazione : inquina[pr][i].stazione
+                                IQA : inquinaPm10[pr][i].IQA,
+                                color : inquinaPm10[pr][i].color,
+                                stazione : inquinaPm10[pr][i].stazione
                             };
                         }
-                    }
+                    } 
                 }
             }
             for(var prop in inquinamentoPerStazioni){
@@ -110,15 +107,15 @@
                     }).bindPopup(max.stazione).addTo(map);
                 }
             }
-            var legend = L.control({position : 'bottomright'});
-            legend.onAdd = function(map){
+            var legend = L.control({position: 'bottomright'});
+            legend.onAdd = function (map) {
                 var div = L.DomUtil.create('div', 'info legend');
                 var grades = ["Ottima", "Buona", "Discreta", "Scadente", "Pessima"];
-                var colors = ["#0000ff","#009900","#ffff00","#ff0000","#cc0099"];
+                var colors = ["#0000ff", "#009900", "#ffff00", "#ff0000", "#cc0099"];
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
-                        '<i style="background:' + colors[i] + '"></i> ' +
-                        grades[i] + '<br>';
+                            '<i style="background:' + colors[i] + '"></i> ' +
+                            grades[i] + '<br>';
                 }
                 return div;
             };
@@ -132,6 +129,7 @@
                 markers.addLayer(marker);
             }
             map.addLayer(markers);
-            setTimeout(function() {spinner.stop();}, 3000);
-        </script>
+            legend.addTo(map);
+            spinner.stop();
+    </script>
 </main>

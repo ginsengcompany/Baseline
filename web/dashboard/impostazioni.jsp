@@ -1,5 +1,10 @@
 <%@ include file="navigation.jsp" %>
+<link rel="stylesheet" href="static/css/mdb.min.css" rel="stylesheet" />
 <main>
+    
+    <style>
+      
+    </style>
 
 
     <div class="row">
@@ -99,6 +104,74 @@
 
         </div>
 
+
+    </div>
+    
+    <div class="row">
+
+
+        <!--Card Medici -->
+        <div class="col-lg-4 col-md-12 mb-4">
+
+            <div class="card card-cascade wider">
+
+                <!-- Card image -->
+                <div class="view gradient-card-header peach-gradient">
+
+                    <!-- Title -->
+                    <h2 class="card-header-title mb-3">Medici</h2>
+                    <!-- Text -->
+                    <p class="mb-0"><i class="fa fa-user-md mr-2"></i></p>
+
+                </div>
+
+                <!-- Card content -->
+                <div class="card-body text-center">
+
+                    <!-- Text -->
+                    <p class="card-text">Pannello di controllo per la configurazione dei medici</p>
+                    <!-- Link -->
+                    <a data-toggle="modal" onclick="setModalMedici()" data-target="#medici" class="orange-text d-flex flex-row-reverse p-2">
+                        <h5 class="waves-effect waves-light">Apri Configurazione<i class="fa fa-angle-double-right ml-2"></i></h5>
+                    </a>
+
+                </div>
+                <!-- Card content -->
+
+            </div>    
+
+        </div>
+
+        <!--Card Strutture -->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+            <div class="card card-cascade wider">
+
+
+                <div class="view gradient-card-header peach-gradient">
+
+                    <!-- Title -->
+                    <h2 class="card-header-title mb-3">Strutture</h2>
+
+                    <p class="mb-0"><i class="fa fa-medkit mr-2"></i></p>
+
+                </div>
+
+
+                <div class="card-body text-center">
+
+
+                    <p class="card-text">Pannello di controllo per la configurazione delle strutture.</p>
+
+                    <a data-toggle="modal" onclick="setModalStrutture()" data-target="#strutture" class="orange-text d-flex flex-row-reverse p-2">
+                        <h5 class="waves-effect waves-light">Apri Configurazione<i class="fa fa-angle-double-right ml-2"></i></h5>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>    
 
@@ -1425,6 +1498,291 @@
             <!--/.Content-->
         </div>
     </div>
+    
+    <!--Modal Medici -->
+    <div class="modal fade show" id="medici" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-right: 17px; display: none;">
+        <div class="modal-dialog modal-fluid" role="document" >
+            <!--Content-->
+            <div class="modal-content" >
+                <!--Header-->
+                <div class="modal-header">
+                    <h4 class="modal-title w-100" id="myModalLabel">Medici</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <section id="bf-table" >
+
+
+                        <p class="description"></p>
+
+
+                        <section class="bf-table">
+
+                            <div class="card card-cascade narrower" >
+
+
+                                <div class="view gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+
+                                    <a href="" class="white-text mx-3">Lista Medici</a>
+
+                                    <div>
+
+                                        <button type="button" id="eliminazioneMedico" onclick="openModalDeletemedici()"
+                                                class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light" data-toggle="modal" data-target="#deleteMedici"  data-tooltip="tooltip" data-placement="top" title="Elimina Medico"><i
+                                                class="fa fa-remove mt-0"></i></button>
+                                    </div>
+
+                                </div>
+                                <br>
+                                <span id="alertErrUp" class="badge badge-danger" style="display: none">Aggiornamento Fallito.</span>
+                                <span id="alertSuccUp" class="badge badge-success" style="display: none">Aggiornamento Completato.</span>
+                                <span id="alertErrIn" class="badge badge-danger" style="display: none">Inserimento Fallito.</span>
+                                <span id="alertSuccIn" class="badge badge-success" style="display: none">Inserimento Completato.</span>
+                                <br>
+                                <div class="px-4">
+                                    <br>
+                                    <div>
+                                        
+                                        <div class="table-wrapper" style="max-height:100%">
+
+                                        <table id="tabMedicis" class="table table-hover mb-0">
+
+                                            <thead>
+                                                <tr>
+                                                    <th class="th-lg"></th>
+                                                    <th class="th-lg">Codice Fiscale</th>
+                                                    <th class="th-lg">Cognome</th>
+                                                    <th class="th-lg">Nome</th>
+                                                    <th class="th-lg">Data Nascita</th>
+                                                    <th class="th-lg">Descrizione</th>
+                                                    <th class="th-lg">Provincia Nascita</th>
+                                                    <th class="th-lg">Denominazione</th>
+                                                    <th class="th-lg">Create User</th>
+                                                    <th class="th-lg">Create Date</th>
+                                                    <th class="th-lg">Update User</th>
+                                                    <th class="th-lg">Update Date</th>
+                                                </tr>
+                                            </thead>
+
+                                        </table>
+                                            
+                                        </div>    
+
+                                    </div>
+
+                                    <hr class="my-0">
+
+
+                                    <div class="d-flex justify-content-between">
+
+
+                                        <nav id="my-4" class="my-4">
+
+                                        </nav>
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </section>
+
+
+
+                    </section>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+
+    <!--Modal Delete Medici-->
+    <div class="modal fade show" id="deleteMedici" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 17px;">
+        <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+            <!--Content-->
+            <div class="modal-content">
+
+                <!--Header-->
+                <div class="modal-header">
+                    <img src="static/img/usermed.jpg" class="rounded-circle img-responsive" alt="Avatar photo">
+                </div>
+                <!--Body-->
+                <div class="modal-body text-center mb-1">
+
+                    <h5 class="mt-1 mb-2">Sei sicuro di eliminare questo Medico ?</h5>
+
+                    <form id="deleteMedicisForm">
+                        <div class="md-form" hidden>
+                            <i class="fa fa-address-card prefix "></i>
+                            <input type="text" id="tokenid" class="form-control form-control-sm" name="tokenid" required>
+                            <label  for="tokenid">Id</label>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" name="submit" class="btn btn-primary waves-effect waves-light">Si, Accetto.</button>
+                            <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">No, Annulla.</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    
+    <!--Modal Strutture -->
+    <div class="modal fade show" id="strutture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="padding-right: 17px; display: none;">
+        <div class="modal-dialog modal-fluid" role="document" >
+            <!--Content-->
+            <div class="modal-content" >
+                <!--Header-->
+                <div class="modal-header">
+                    <h4 class="modal-title w-100" id="myModalLabel">Strutture</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <section id="bf-table" >
+
+
+                        <p class="description"></p>
+
+
+                        <section class="bf-table">
+
+                            <div class="card card-cascade narrower" >
+
+
+                                <div class="view gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+
+                                    <a href="" class="white-text mx-3">Lista Strutture</a>
+
+                                    <div>
+
+                                        <button type="button" id="eliminazioneStruttura" onclick="openModalDeleteStrutture()"
+                                                class="btn btn-outline-white btn-rounded btn-sm px-2 waves-effect waves-light" data-toggle="modal" data-target="#deleteStrutture"  data-tooltip="tooltip" data-placement="top" title="Elimina Struttura"><i
+                                                class="fa fa-remove mt-0"></i></button>
+                                    </div>
+
+                                </div>
+                                <br>
+                                <span id="alertErrUp" class="badge badge-danger" style="display: none">Aggiornamento Fallito.</span>
+                                <span id="alertSuccUp" class="badge badge-success" style="display: none">Aggiornamento Completato.</span>
+                                <span id="alertErrIn" class="badge badge-danger" style="display: none">Inserimento Fallito.</span>
+                                <span id="alertSuccIn" class="badge badge-success" style="display: none">Inserimento Completato.</span>
+                                <br>
+                                <div class="px-4">
+                                    <br>
+                                    <div>
+                                        
+                                        <div class="table-wrapper" style="max-height:100%">
+
+                                        <table id="tabStrutture" class="table table-hover mb-0">
+
+                                            <thead>
+                                                <tr>
+                                                    <th class="th-lg"></th>
+                                                    <th class="th-lg">Denominazione</th>
+                                                    <th class="th-lg">Legale Rappresentante</th>
+                                                    <th class="th-lg">Codice Regione</th>
+                                                    <th class="th-lg">Codice Distretto</th>
+                                                    <th class="th-lg">Codice Struttura</th>
+                                                    <th class="th-lg">Codice Sys</th>
+                                                    <th class="th-lg">Indirizzo</th>
+                                                    <th class="th-lg">Abilitata</th>
+                                                    <th class="th-lg">Comune</th>
+                                                    <th class="th-lg">Provincia</th>
+                                                    <th class="th-lg">Telefono</th>
+                                                    <th class="th-lg">Fax</th>
+                                                    <th class="th-lg">Email</th>
+                                                    <th class="th-lg">PartitaIva</th>
+                                                </tr>
+                                            </thead>
+
+                                        </table>
+                                            
+                                        </div>    
+
+                                    </div>
+
+                                    <hr class="my-0">
+
+
+                                    <div class="d-flex justify-content-between">
+
+
+                                        <nav id="my-4" class="my-4">
+
+                                        </nav>
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </section>
+
+
+
+                    </section>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    
+    <!--Modal Delete Struttura-->
+    <div class="modal fade show" id="deleteStrutture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 17px;">
+        <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+            <!--Content-->
+            <div class="modal-content">
+
+                <!--Header-->
+                <div class="modal-header">
+                    <img src="static/img/hostpital.jpg" class="rounded-circle img-responsive" alt="Avatar photo">
+                </div>
+                <!--Body-->
+                <div class="modal-body text-center mb-1">
+
+                    <h5 class="mt-1 mb-2">Sei sicuro di eliminare questa Struttura ?</h5>
+
+                    <form id="deleteStrutturaForm">
+                        <div class="md-form" hidden>
+                            <i class="fa fa-address-card prefix "></i>
+                            <input type="text" id="tokenid" class="form-control form-control-sm" name="tokenid" required>
+                            <label  for="tokenid">Id</label>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" name="submit" class="btn btn-primary waves-effect waves-light">Si, Accetto.</button>
+                            <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">No, Annulla.</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
 
     <script>
         $(document).ready(function () {
@@ -1524,6 +1882,9 @@
             $('#modificaGruppo').prop('disabled', true);
             $('#modificaUtente').prop('disabled', true);
             $('#modificaToken').prop('disabled', true);
+            $('#eliminazioneMedico').prop('disabled', true);
+            $('#eliminazioneStruttura').prop('disabled', true);
+            
 
             var url_string = document.URL;
 
@@ -1674,6 +2035,9 @@
                         if (response.object[i].leaf === false) {
                             response.object.push(response.object[i].children[0]);
                             response.object.push(response.object[i].children[1]);
+                            response.object.push(response.object[i].children[2]);
+                            response.object.push(response.object[i].children[3]);
+                            response.object.push(response.object[i].children[4]);
                             delete response.object[i];
                         }
                     }
@@ -1692,7 +2056,6 @@
                     var arrayUser = newArray;
 
                     var materialUserAddID = document.getElementById('menu');
-                    var materialUserAddID1 = document.getElementById('menu1');
                     $.each(arrayUser, function (i) {
                         var option = document.createElement("option");
                         if (arrayUser[i].idPadre) {
@@ -1703,6 +2066,24 @@
 
                         option.value = JSON.stringify(arrayUser[i]);
                         materialUserAddID.add(option);
+                    });
+
+                    $('.mdb-select').material_select();
+                    
+                    $('.mdb-select').material_select('destroy');
+
+                    var arrayUser = newArray;
+
+                    var materialUserAddID1 = document.getElementById('menu1');
+                    $.each(arrayUser, function (i) {
+                        var option = document.createElement("option");
+                        if (arrayUser[i].idPadre) {
+                            option.text = arrayUser[i].idPadre + ' -> ' + arrayUser[i].text;
+                        } else {
+                            option.text = arrayUser[i].text;
+                        }
+
+                        option.value = JSON.stringify(arrayUser[i]);
                         materialUserAddID1.add(option);
                     });
 
@@ -1730,12 +2111,27 @@
                     var arrayUser = response.object;
 
                     var materialUserAddID = document.getElementById('sezione');
-                    var materialUserAddID1 = document.getElementById('sezione1');
                     $.each(arrayUser, function (i) {
                         var option = document.createElement("option");
                         option.text = arrayUser[i].descrizione;
                         option.value = arrayUser[i].id;
                         materialUserAddID.add(option);
+                    });
+
+                    $('.mdb-select').material_select();
+                    
+                    $('.mdb-select').material_select('destroy');
+
+
+                    var arrayUser = response.object;
+
+                   
+                    var materialUserAddID1 = document.getElementById('sezione1');
+                    $.each(arrayUser, function (i) {
+                        var option = document.createElement("option");
+                        option.text = arrayUser[i].descrizione;
+                        option.value = arrayUser[i].id;
+                        
                         materialUserAddID1.add(option);
                     });
 
@@ -1892,6 +2288,144 @@
                         document.getElementById('accessToken').value = md5(makeid());
                     }
             );
+    
+            tabMedicis = $('#tabMedicis').DataTable({
+
+                ajax: {
+                    url: '../rest/medici',
+                    type: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': "Bearer " + access_token},
+                    dataSrc: function (json) {
+                        return json.object;
+                    }
+                },
+                responsive: true,
+                autoWidth: false,
+                paging: false,
+                searching: false,
+                info: false,
+                aoColumns: [
+                    {'data': "id", visible: false},
+                    {'data': "codiceFiscale", width:"1px"},
+                    {'data': "cognome", width:"1px"},
+                    {'data': "nome", width:"1px"},
+                    {'data': "dataNascita", "render": function (data) {
+                            moment.locale('it');
+                            var d = new Date(data);
+                            var a = moment(d);
+                            return a.format('LLLL');
+                        }, width:"1px"},
+                    {'data': "descrizione", width:"1px"},
+                    {'data': "provinciaNascita", width:"1px"},
+                    {'data': "denominazione", width:"1px"},
+                    {'data': "createUser", width:"1px"},
+                    {'data': "createDate","render": function (data) {
+                            moment.locale('it');
+                            var d = new Date(data);
+                            var a = moment(d); 
+                            return a.format('LLLL');
+                        }, width:"1px"},
+                    {'data': "updateUser", width:"1px"},
+                    {'data': "updateDate","render": function (data) {
+                            moment.locale('it');
+                            var d = new Date(data);
+                            var a = moment(d); 
+                            return a.format('LLLL');
+                        }, width:"1px"}
+                ]
+            });
+
+            $('#tabMedicis tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                    $('#eliminazioneMedico').prop('disabled', true);
+                } else {
+                    tabMedicis.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    $('#eliminazioneMedico').prop('disabled', false);
+                    ;
+                }
+            });
+
+            $('#tabMedicis tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = tabMedicis.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
+            
+            tabStrutture = $('#tabStrutture').DataTable({
+
+                ajax: {
+                    url: '../rest/strutture',
+                    type: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': "Bearer " + access_token},
+                    dataSrc: function (json) {
+                        return json.object;
+                    }
+                },
+                responsive: true,
+                autoWidth: false,
+                paging: false,
+                searching: false,
+                info: false,
+                aoColumns: [
+                    {'data': "id", visible: false},
+                    {'data': "denominazione", width:"1px"},
+                    {'data': "legaleRappresentante", width:"1px"},
+                    {'data': "codiceRegione", width:"1px"},
+                    {'data': "codiceDistretto", width:"1px"},
+                    {'data': "codiceStruttura", width:"1px"},
+                    {'data': "codiceSys", width:"1px"},
+                    {'data': "indirizzo", width:"1px"},
+                    {'data': "abilitata", width:"1px"},
+                    {'data': "comune", width:"1px"},
+                    {'data': "provincia",width:"1px"},
+                    {'data': "telefono", width:"1px"},
+                    {'data': "fax", width:"1px"},
+                    {'data': "email", width:"1px"},
+                    {'data': "partitaIva", width:"1px"}
+                ]
+            });
+
+            $('#tabStrutture tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                    $('#eliminazioneStruttura').prop('disabled', true);
+                } else {
+                    tabStrutture.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    $('#eliminazioneStruttura').prop('disabled', false);
+                    ;
+                }
+            });
+
+            $('#tabStrutture tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = tabStrutture.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
 
         });
 
@@ -1910,6 +2444,20 @@
         }
 
         function setModaltoken() {
+            document.getElementById('alertSuccIn').style.display = 'none';
+            document.getElementById('alertErrIn').style.display = 'none';
+            document.getElementById('alertSuccUp').style.display = 'none';
+            document.getElementById('alertErrUp').style.display = 'none';
+        }
+        
+        function setModalMedici() {
+            document.getElementById('alertSuccIn').style.display = 'none';
+            document.getElementById('alertErrIn').style.display = 'none';
+            document.getElementById('alertSuccUp').style.display = 'none';
+            document.getElementById('alertErrUp').style.display = 'none';
+        }
+        
+        function setModalStrutture() {
             document.getElementById('alertSuccIn').style.display = 'none';
             document.getElementById('alertErrIn').style.display = 'none';
             document.getElementById('alertSuccUp').style.display = 'none';
@@ -4055,6 +4603,118 @@
             return false;
 
         });
+        
+        function openModalDeletemedici() {
+            
+            var ids1 = $.map(tabMedicis.rows('.selected').data(), function (item) {
+                return item;
+            });
+            arrayUtenti = ids1;
+
+            $('#tokenid').val(arrayUtenti[0].id);
+
+        };
+        
+        $('#deleteMedicisForm').on('submit', function () {
+
+            var arrayDelete = {};
+            
+            arrayDelete.id = $('#tokenid').val();
+            
+            console.log(arrayDelete);
+            
+            var url_string = document.URL; 
+            
+            var url = new URL(url_string);
+            var access_token = url.searchParams.get("authToken");
+            
+            /*$.ajax({
+                url: '../rest/medici/'+arrayDelete.id,
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " +access_token
+                },
+                dataType: "json",
+                data: JSON.stringify(arrayDelete),
+                success: function (response) {
+                   if(response.esito === true){  
+                       $('#deleteToken').hide();
+                       $('.modal-backdrop').remove();
+                       tabMedicis.ajax.reload();
+                       document.getElementById('alertSuccDe').style.display = 'block';
+                   }
+                },
+                failure: function (response) { 
+                    if (response.status === 401 || response.status === 400 || response.status === 500) {  
+                        $('#deleteToken').hide();
+                        $('.modal-backdrop').remove();
+                        tabMedicis.ajax.reload();
+                        document.getElementById('alertErrDe').style.display = 'block';
+                    }      
+                }
+            });*/
+     
+            return false;
+
+        });
+        
+        function openModalDeleteStrutture() {
+            
+            var ids1 = $.map(tabStrutture.rows('.selected').data(), function (item) {
+                return item;
+            });
+            arrayUtenti = ids1;
+
+            $('#tokenid').val(arrayUtenti[0].id);
+
+        };
+        
+        $('#deleteStrutturaForm').on('submit', function () {
+
+            var arrayDelete = {};
+            
+            arrayDelete.id = $('#tokenid').val();
+            
+            console.log(arrayDelete);
+            
+            var url_string = document.URL; 
+            
+            var url = new URL(url_string);
+            var access_token = url.searchParams.get("authToken");
+            
+            /*$.ajax({
+                url: '../rest/medici/'+arrayDelete.id,
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " +access_token
+                },
+                dataType: "json",
+                data: JSON.stringify(arrayDelete),
+                success: function (response) {
+                   if(response.esito === true){  
+                       $('#deleteToken').hide();
+                       $('.modal-backdrop').remove();
+                       tabMedicis.ajax.reload();
+                       document.getElementById('alertSuccDe').style.display = 'block';
+                   }
+                },
+                failure: function (response) { 
+                    if (response.status === 401 || response.status === 400 || response.status === 500) {  
+                        $('#deleteToken').hide();
+                        $('.modal-backdrop').remove();
+                        tabMedicis.ajax.reload();
+                        document.getElementById('alertErrDe').style.display = 'block';
+                    }      
+                }
+            });*/
+     
+            return false;
+
+        });
+        
+        
 
     </script>
 
