@@ -41,15 +41,34 @@
 
     </div>
     <script>
-            var inquina, stazioni;
+            var inquina, stazioni, comuni;
             inquina = <%=request.getAttribute("dati")%>;
             stazioni = <%=request.getAttribute("luoghi")%>;
+            comuni = <%=request.getAttribute("comuni")%>;
             var map = new L.map('map');
             var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             var osmAttrib = 'Map dati © Baseline';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 15, attribution: osmAttrib});
-            map.setView(new L.LatLng("40.9296228","14.5373564"),8);
+            var osm = new L.TileLayer(osmUrl, {minZoom: 6, maxZoom: 15, attribution: osmAttrib});
+            map.setView(new L.LatLng("40.9296228","14.5373564"),6);
             map.addLayer(osm);
+            var optionsLoadBar = {
+                lines: 7,
+                length: 9,
+                width: 12,
+                radius: 8,
+                rotate: 13,
+                color: '#3145a3',
+                speed: 1,
+                trail: 60,
+                shadow: false,
+                hwaccel: false,
+                className: 'spinner',
+                zIndex: 2e9,
+                top: 'auto',
+                left: 'auto'
+            };
+            var spinner = new Spinner(optionsLoadBar).spin(document.getElementById("map"));
+            //map.spin(true);
             var inquinamentoPerStazioni = {};
             for(var prop in stazioni.luoghi){
                 inquinamentoPerStazioni[prop] = stazioni.luoghi[prop];
@@ -87,7 +106,7 @@
                         color: max.color,
                         fillColor: max.color,
                         fillOpacity: 0.5,
-                        radius: 800
+                        radius: 300
                     }).bindPopup(max.stazione).addTo(map);
                 }
             }
@@ -104,5 +123,15 @@
                 return div;
             };
             legend.addTo(map);
+            var markers = L.markerClusterGroup({
+                showCoverageOnHover : true,
+                zoomToBoundsOnClick : true
+            });
+            for(var i=0;i<comuni.length;i++){
+                var marker = L.marker(new L.LatLng(comuni[i].coordinate.latitudine,comuni[i].coordinate.longitudine)).bindPopup(comuni[i].nome + "<br>Incidenza: " + comuni[i].incidenza);
+                markers.addLayer(marker);
+            }
+            map.addLayer(markers);
+            setTimeout(function() {spinner.stop();}, 3000);
         </script>
 </main>

@@ -65,7 +65,13 @@
 
         <link href="static/css/dataTables.checkboxes.css" rel="stylesheet" />
 
-        <link rel="stylesheet" href="static/css/leaflet.css" rel="stylesheet" />
+        <link rel="stylesheet" href="static/css/leaflet.css" rel="stylesheet" /> 
+      
+      <!-- <link href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/> -->
+        
+        <link rel="stylesheet" href="static/css/MarkerCluster.Default.css" />
+        
+        <link rel="stylesheet" href="static/css/MarkerCluster.css"/>
         
         <script src="static/js/angular.min.js"></script>
 
@@ -293,9 +299,17 @@
 
     <script type="text/javascript" src="static/js/bpmn-viewer.development.js"></script>
 
-    <script type="text/javascript" src="static/js/leaflet.js"></script>
+    <script type="text/javascript" src="static/js/leaflet.js"></script> 
+   
+  <!-- <script type="text/javascript" src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"></script> -->
 
     <script type="text/javascript" src="static/js/md5.js"></script>
+    
+    <script src="static/js/leaflet.markercluster.js"></script>
+    
+    <script src="static/js/spin.min.js"></script>
+    
+    <script src="static/js/leaflet.spin.min.js"></script>
 
 </body>
 

@@ -6,6 +6,7 @@
 package it.gesan.inquinamento.servlet;
 
 import com.google.gson.Gson;
+import it.gesan.inquinamento.inquinamento.CsvComuniReader;
 import it.gesan.inquinamento.inquinamento.DatiInquinamento;
 import it.gesan.inquinamento.inquinamento.Luogo;
 import java.io.IOException;
@@ -68,10 +69,12 @@ public class Dati extends HttpServlet {
         DatiInquinamento dati = new DatiInquinamento();
         Document doc = Jsoup.connect("http://88.45.133.130/meteoambientecampania/php/pubblicazione_dati_centraline_valori_medi.php").get();
         dati.populate(doc);
+        CsvComuniReader comuni = new CsvComuniReader();
         Luogo luoghi = new Luogo();
         Gson gson = new Gson();
         request.setAttribute("dati", gson.toJson(dati));
         request.setAttribute("luoghi", gson.toJson(luoghi));
+        request.setAttribute("comuni", gson.toJson(comuni.getComuni()));
         rd.forward(request, response);
     }
 
