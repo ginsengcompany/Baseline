@@ -41,68 +41,69 @@
 
     </div>
     <script>
-            var inquina, stazioni;
-            inquina = <%=request.getAttribute("dati")%>;
-            stazioni = <%=request.getAttribute("luoghi")%>;
-            var map = new L.map('map');
-            var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib = 'Map dati © Baseline';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 15, attribution: osmAttrib});
-            map.setView(new L.LatLng("40.9296228","14.5373564"),8);
-            map.addLayer(osm);
-            var inquinamentoPerStazioni = {};
-            for(var prop in stazioni.luoghi){
-                inquinamentoPerStazioni[prop] = stazioni.luoghi[prop];
-                for(var pr in inquina){
-                    if(pr === "benzene" || pr === "pm2_5" || pr === "listaLuoghi")
-                        continue;
-                    for(var i=0; i < inquina[pr].length; i++){
-                        if(prop === inquina[pr][i].stazione){
-                            inquinamentoPerStazioni[prop][pr] = {
-                                IQA : inquina[pr][i].IQA,
-                                color : inquina[pr][i].color,
-                                stazione : inquina[pr][i].stazione
-                            };
-                        }
+        var inquina, stazioni;
+        inquina = <%=request.getAttribute("dati")%>;
+        stazioni = <%=request.getAttribute("luoghi")%>;
+        var map = new L.map('map');
+        var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var osmAttrib = 'Map dati © Baseline';
+        var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 15, attribution: osmAttrib});
+        map.setView(new L.LatLng("40.9296228", "14.5373564"), 8);
+        map.addLayer(osm);
+        var inquinamentoPerStazioni = {};
+        for (var prop in stazioni.luoghi) {
+            inquinamentoPerStazioni[prop] = stazioni.luoghi[prop];
+            for (var pr in inquina) {
+                if (pr === "benzene" || pr === "pm2_5" || pr === "listaLuoghi")
+                    continue;
+                for (var i = 0; i < inquina[pr].length; i++) {
+                    if (prop === inquina[pr][i].stazione) {
+                        inquinamentoPerStazioni[prop][pr] = {
+                            IQA: inquina[pr][i].IQA,
+                            color: inquina[pr][i].color,
+                            stazione: inquina[pr][i].stazione
+                        };
                     }
                 }
             }
-            for(var prop in inquinamentoPerStazioni){
-                var max = {
-                    val: 0,
-                    color: "",
-                    stazione : "",
-                    latitudine: inquinamentoPerStazioni[prop].latitudine,
-                    longitudine: inquinamentoPerStazioni[prop].longitudine
-                };
-                for(var pr in inquinamentoPerStazioni[prop]){
-                    if(max.val < inquinamentoPerStazioni[prop][pr].IQA){
-                        max.color = inquinamentoPerStazioni[prop][pr].color;
-                        max.val = inquinamentoPerStazioni[prop][pr].IQA;
-                        max.stazione = inquinamentoPerStazioni[prop][pr].stazione;
-                    }
-                }
-                if(max.val > 0){
-                    L.circle([max.latitudine, max.longitudine], {
-                        color: max.color,
-                        fillColor: max.color,
-                        fillOpacity: 0.5,
-                        radius: 800
-                    }).bindPopup(max.stazione).addTo(map);
+        }
+        for (var prop in inquinamentoPerStazioni) {
+            var max = {
+                val: 0,
+                color: "",
+                stazione: "",
+                latitudine: inquinamentoPerStazioni[prop].latitudine,
+                longitudine: inquinamentoPerStazioni[prop].longitudine
+            };
+            for (var pr in inquinamentoPerStazioni[prop]) {
+                if (max.val < inquinamentoPerStazioni[prop][pr].IQA) {
+                    max.color = inquinamentoPerStazioni[prop][pr].color;
+                    max.val = inquinamentoPerStazioni[prop][pr].IQA;
+                    max.stazione = inquinamentoPerStazioni[prop][pr].stazione;
                 }
             }
-            var legend = L.control({position : 'bottomright'});
-            legend.onAdd = function(map){
-                var div = L.DomUtil.create('div', 'info legend');
-                var grades = ["Ottima", "Buona", "Discreta", "Scadente", "Pessima"];
-                var colors = ["#0000ff","#009900","#ffff00","#ff0000","#cc0099"];
-                for (var i = 0; i < grades.length; i++) {
-                    div.innerHTML +=
+            if (max.val > 0) {
+                L.circle([max.latitudine, max.longitudine], {
+                    color: max.color,
+                    fillColor: max.color,
+                    fillOpacity: 0.5,
+                    radius: 800
+                }).bindPopup(max.stazione).addTo(map);
+            }
+        }
+        var legend = L.control({position: 'bottomright'});
+        legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend');
+            var grades = ["Ottima", "Buona", "Discreta", "Scadente", "Pessima"];
+            var colors = ["#0000ff", "#009900", "#ffff00", "#ff0000", "#cc0099"];
+            for (var i = 0; i < grades.length; i++) {
+                div.innerHTML +=
                         '<i style="background:' + colors[i] + '"></i> ' +
                         grades[i] + '<br>';
-                }
-                return div;
-            };
-            legend.addTo(map);
-        </script>
+            }
+            return div;
+        };
+        legend.addTo(map);
+
+    </script>
 </main>

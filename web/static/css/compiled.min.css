@@ -249,10 +249,7 @@ button, select {
     border-style: none
 }
 
-input[type=radio] {
-    box-sizing: border-box;
-    padding: 0
-}
+
 
 input[type=date], input[type=datetime-local], input[type=month], input[type=time] {
     -webkit-appearance: listbox
@@ -11262,7 +11259,6 @@ a.text-light:focus, a.text-light:hover {
 .waves-effect {
     position: relative;
     cursor: pointer;
-    overflow: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -21031,12 +21027,6 @@ a.pswp__share--download:hover {
     vertical-align: middle
 }
 
-[type=radio] {
-    position: absolute;
-    left: -9999px;
-    visibility: hidden
-}
-
 [type=checkbox] + label, [type=radio] + label {
     position: relative;
     padding-left: 35px;
@@ -21137,11 +21127,7 @@ a.pswp__share--download:hover {
     background: linear-gradient(40deg, #45cafc, #303f9f) !important
 }
 
-[type=radio] {
-    position: absolute;
-    left: -9999px;
-    visibility: hidden
-}
+
 
 [type=checkbox] + label, [type=radio] + label {
     position: relative;

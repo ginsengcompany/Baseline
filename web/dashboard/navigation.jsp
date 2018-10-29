@@ -66,13 +66,19 @@
         <link href="static/css/dataTables.checkboxes.css" rel="stylesheet" />
 
         <link rel="stylesheet" href="static/css/leaflet.css" rel="stylesheet" />
-        
+
         <script src="static/js/angular.min.js"></script>
 
     </head>
     <%
         String url_string = request.getQueryString();
     %>
+    
+    <style>
+        ul {
+            list-style-type: none;
+        }
+    </style>
     <body class="fixed-sn light-blue-skin">
         <!--Double navigation-->
     <header> <!-- Sidebar navigation -->
@@ -130,12 +136,19 @@
                 <p>Dashboard di Baseline</p>
             </div>
             <ul class="nav navbar-nav nav-flex-icons ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="inquinamento?<%=url_string%>">
-                        <input type="hidden" id="fattoriInquinanti" name="fattoriInquinanti" value="null" />
-                        <i class="fa fa-bar-chart"></i> 
-                        <span class="clearfix d-none d-sm-inline-block">Fattori Inquinanti</span>
-                    </a>
+                <li>
+                    <ul class="collapsible collapsible-accordion" style="padding-top: 6px">
+                        <li class="nav-item">
+                            <a class="collapsible-header waves-effect arrow-r">
+                                <i class="fa fa-bar-chart"></i> 
+                                <span class="clearfix d-none d-sm-inline-block">Fattori Inquinanti</span>
+                            </a>    
+                            <div class="collapsible-body">
+                                <a class="nav-link" style="background-color: #6f96bc;" href="inquinamento?<%=url_string%>">PM 10</a>
+                                <a class="nav-link" style="background-color: #6f96bc;" href="inquinamentoPM25.jsp?<%=url_string%>">PM 2.5</a>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="impostazioni.jsp?<%=url_string%>">
@@ -189,7 +202,7 @@
 
         var app = angular.module("myApp", []);
         var SCOPE;
-        app.controller("myCtrl", function ($scope,$compile) {
+        app.controller("myCtrl", function ($scope, $compile) {
             $scope.firstName = "baseline";
             $scope.lastName = "2018";
             SCOPE = $scope;
@@ -207,6 +220,9 @@
 
         // SideNav Initialization
         jQuery(".button-collapse").sideNav();
+        
+        var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+        Ps.initialize(sideNavScrollbar);
 
         $(document).ready(function () {
 
