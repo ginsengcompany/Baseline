@@ -41,7 +41,7 @@
 
     </div>
     <script>
-            var inquina, stazioni, comuni;
+            var inquinaPm10, stazioni, comuni;
             inquinaPm10 = <%=request.getAttribute("pm10")%>;
             stazioni = <%=request.getAttribute("luoghi")%>;
             comuni = <%=request.getAttribute("comuni")%>;
@@ -71,33 +71,23 @@
             var inquinamentoPerStazioni = {};
             for(var prop in stazioni.luoghi){
                 inquinamentoPerStazioni[prop] = stazioni.luoghi[prop];
-                for(var pr in inquinaPm10){
-                    for(var i=0; i < inquinaPm10[pr].length; i++){
-                        if(prop === inquinaPm10[pr][i].stazione){
-                            inquinamentoPerStazioni[prop][pr] = {
-                                IQA : inquinaPm10[pr][i].IQA,
-                                color : inquinaPm10[pr][i].color,
-                                stazione : inquinaPm10[pr][i].stazione
-                            };
-                        }
-                    } 
-                }
+                for(var i=0; i < inquinaPm10.length; i++){
+                    if(prop === inquinaPm10[i].stazione){
+                        inquinamentoPerStazioni[prop].IQA = inquinaPm10[i].IQA;
+                        inquinamentoPerStazioni[prop].color = inquinaPm10[i].color;
+                        inquinamentoPerStazioni[prop].stazione = inquinaPm10[i].stazione;
+                        break;
+                    }
+                } 
             }
             for(var prop in inquinamentoPerStazioni){
                 var max = {
-                    val: 0,
-                    color: "",
-                    stazione : "",
+                    val: inquinamentoPerStazioni[prop].IQA,
+                    color: inquinamentoPerStazioni[prop].color,
+                    stazione : inquinamentoPerStazioni[prop].stazione,
                     latitudine: inquinamentoPerStazioni[prop].latitudine,
                     longitudine: inquinamentoPerStazioni[prop].longitudine
                 };
-                for(var pr in inquinamentoPerStazioni[prop]){
-                    if(max.val < inquinamentoPerStazioni[prop][pr].IQA){
-                        max.color = inquinamentoPerStazioni[prop][pr].color;
-                        max.val = inquinamentoPerStazioni[prop][pr].IQA;
-                        max.stazione = inquinamentoPerStazioni[prop][pr].stazione;
-                    }
-                }
                 if(max.val > 0){
                     L.circle([max.latitudine, max.longitudine], {
                         color: max.color,
@@ -120,6 +110,7 @@
                 return div;
             };
             legend.addTo(map);
+            /*
             var markers = L.markerClusterGroup({
                 showCoverageOnHover : true,
                 zoomToBoundsOnClick : true
@@ -129,7 +120,7 @@
                 markers.addLayer(marker);
             }
             map.addLayer(markers);
-            legend.addTo(map);
+            legend.addTo(map); */
             spinner.stop();
     </script>
 </main>

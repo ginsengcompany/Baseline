@@ -152,7 +152,7 @@
                             </a>    
                             <div class="collapsible-body">
                                 <a class="nav-link" style="background-color: #6f96bc;" href="inquinamento?<%=url_string%>">PM 10</a>
-                                <a class="nav-link" style="background-color: #6f96bc;" href="inquinamentoPM25.jsp?<%=url_string%>">PM 2.5</a>
+                                <a class="nav-link" style="background-color: #6f96bc;" href="inquinamentoPM25?<%=url_string%>">PM 2.5</a>
                             </div>
                         </li>
                     </ul>

@@ -14,9 +14,17 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>DatiPm25</servlet-name>
+        <servlet-class>it.gesan.inquinamento.servlet.DatiPm25</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Jersey REST Service</servlet-name>
         <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DatiPm25</servlet-name>
+        <url-pattern>/DatiPm25</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

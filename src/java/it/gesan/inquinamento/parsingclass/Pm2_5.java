@@ -14,8 +14,11 @@ public class Pm2_5 {
     private String comune;
     private String provincia;
     private String um;
-    private String mediaGiornaliera;
+    private double mediaGiornaliera;
     private String latitudine, longitudine;
+    private double IQA;
+    private final int limite = 29;
+    private String color;
 
     /**
      * @return the stazione
@@ -76,7 +79,7 @@ public class Pm2_5 {
     /**
      * @return the mediaGiornaliera
      */
-    public String getMediaGiornaliera() {
+    public double getMediaGiornaliera() {
         return mediaGiornaliera;
     }
 
@@ -84,7 +87,17 @@ public class Pm2_5 {
      * @param mediaGiornaliera the mediaGiornaliera to set
      */
     public void setMediaGiornaliera(String mediaGiornaliera) {
-        this.mediaGiornaliera = mediaGiornaliera;
+        this.mediaGiornaliera = Double.parseDouble(mediaGiornaliera);
+        this.IQA = (this.mediaGiornaliera / this.limite ) * 100;
+        this.setColor();
+    }
+    
+    public double getIQA(){
+        return this.IQA;
+    }
+    
+    public String getColor(){
+        return this.color;
     }
 
     /**
@@ -113,5 +126,18 @@ public class Pm2_5 {
      */
     public void setLongitudine(String longitudine) {
         this.longitudine = longitudine;
+    }
+    
+    private void setColor(){
+        if(IQA <= 33)
+            this.color = "#0000ff";
+        else if(IQA > 33 && IQA <= 66)
+            this.color = "#009900";
+        else if(IQA > 66 && IQA <= 99)
+            this.color = "#ffff00";
+        else if(IQA > 99 && IQA <= 150)
+            this.color = "#ff0000";
+        else
+            this.color = "#cc0099";
     }
 }
