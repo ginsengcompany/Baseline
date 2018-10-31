@@ -247,11 +247,11 @@ public class StruttureResources {
             UtenteVO utenteVO = (UtenteVO)esito.getObject();
             StrutturaVO sVO = new StrutturaVO();
             
-            sVO.setId(id);
+            sVO.setPrimaryKey(id);
             
             esito = StrutturePresentation.delete(sVO);
 
-            if(esito.getReturnValue() == ReturnValues.SAVED){
+            if(esito.getReturnValue() == ReturnValues.DELETED){
                 esito.setEsito(true);
             }            
             //jsonUtente = new JSONObject(mapper.writeValueAsString(utenteVO));

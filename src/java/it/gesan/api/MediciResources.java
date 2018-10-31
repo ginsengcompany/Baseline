@@ -229,11 +229,11 @@ public class MediciResources {
             UtenteVO utenteVO = (UtenteVO)esito.getObject();
             MedicoVO sVO = new MedicoVO();
             
-            sVO.setId(id);
+            sVO.setPrimaryKey(id);
             
             esito = MediciPresentation.delete(sVO);
 
-            if(esito.getReturnValue() == ReturnValues.SAVED){
+            if(esito.getReturnValue() == ReturnValues.DELETED){
                 esito.setEsito(true);
             }            
             //jsonUtente = new JSONObject(mapper.writeValueAsString(utenteVO));

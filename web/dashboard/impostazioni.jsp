@@ -1356,10 +1356,12 @@
 
                                 </div>
                                 <br>
-                                <span id="alertErrUp" class="badge badge-danger" style="display: none">Aggiornamento Fallito.</span>
-                                <span id="alertSuccUp" class="badge badge-success" style="display: none">Aggiornamento Completato.</span>
-                                <span id="alertErrIn" class="badge badge-danger" style="display: none">Inserimento Fallito.</span>
-                                <span id="alertSuccIn" class="badge badge-success" style="display: none">Inserimento Completato.</span>
+                                <span id="alertErrUpTok" class="badge badge-danger" style="display: none">Aggiornamento Fallito.</span>
+                                <span id="alertSuccUpTok" class="badge badge-success" style="display: none">Aggiornamento Completato.</span>
+                                <span id="alertErrInTok" class="badge badge-danger" style="display: none">Inserimento Fallito.</span>
+                                <span id="alertSuccInTok" class="badge badge-success" style="display: none">Inserimento Completato.</span>
+                                <span id="alertErrDeTok" class="badge badge-danger" style="display: none">Eliminazione Fallita.</span>
+                                <span id="alertSuccDeTok" class="badge badge-success" style="display: none">Eliminazione Completata.</span>
                                 <br>
                                 <div class="px-4">
                                     <br>
@@ -1538,10 +1540,12 @@
 
                                 </div>
                                 <br>
-                                <span id="alertErrUp" class="badge badge-danger" style="display: none">Aggiornamento Fallito.</span>
-                                <span id="alertSuccUp" class="badge badge-success" style="display: none">Aggiornamento Completato.</span>
-                                <span id="alertErrIn" class="badge badge-danger" style="display: none">Inserimento Fallito.</span>
-                                <span id="alertSuccIn" class="badge badge-success" style="display: none">Inserimento Completato.</span>
+                                <span id="alertErrUpMed" class="badge badge-danger" style="display: none">Aggiornamento Fallito.</span>
+                                <span id="alertSuccUpMed" class="badge badge-success" style="display: none">Aggiornamento Completato.</span>
+                                <span id="alertErrInMed" class="badge badge-danger" style="display: none">Inserimento Fallito.</span>
+                                <span id="alertSuccInMed" class="badge badge-success" style="display: none">Inserimento Completato.</span>
+                                <span id="alertErrDeMed" class="badge badge-danger" style="display: none">Eliminazione Fallita.</span>
+                                <span id="alertSuccDeMed" class="badge badge-success" style="display: none">Eliminazione Completata.</span>
                                 <br>
                                 <div class="px-4">
                                     <br>
@@ -1629,7 +1633,7 @@
                         </div>
 
                         <div class="text-center mt-4">
-                            <button type="submit" name="submit" class="btn btn-primary waves-effect waves-light">Si, Accetto.</button>
+                            <button type="submit" name="submit" class="btn btn-primary waves-effect waves-light" onclick="deleteMedicisForm()">Si, Accetto.</button>
                             <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">No, Annulla.</button>
                         </div>
                     </form>
@@ -1679,10 +1683,12 @@
 
                                 </div>
                                 <br>
-                                <span id="alertErrUp" class="badge badge-danger" style="display: none">Aggiornamento Fallito.</span>
-                                <span id="alertSuccUp" class="badge badge-success" style="display: none">Aggiornamento Completato.</span>
-                                <span id="alertErrIn" class="badge badge-danger" style="display: none">Inserimento Fallito.</span>
-                                <span id="alertSuccIn" class="badge badge-success" style="display: none">Inserimento Completato.</span>
+                                <span id="alertErrUpStr" class="badge badge-danger" style="display: none">Aggiornamento Fallito.</span>
+                                <span id="alertSuccUpStr" class="badge badge-success" style="display: none">Aggiornamento Completato.</span>
+                                <span id="alertErrInStr" class="badge badge-danger" style="display: none">Inserimento Fallito.</span>
+                                <span id="alertSuccInStr" class="badge badge-success" style="display: none">Inserimento Completato.</span>
+                                <span id="alertErrDeStr" class="badge badge-danger" style="display: none">Eliminazione Fallita.</span>
+                                <span id="alertSuccDeStr" class="badge badge-success" style="display: none">Eliminazione Completata.</span>
                                 <br>
                                 <div class="px-4">
                                     <br>
@@ -1773,7 +1779,7 @@
                         </div>
 
                         <div class="text-center mt-4">
-                            <button type="submit" name="submit" class="btn btn-primary waves-effect waves-light">Si, Accetto.</button>
+                            <button type="submit" name="submit" class="btn btn-primary waves-effect waves-light" onclick="deleteStrutturaForm()">Si, Accetto.</button>
                             <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">No, Annulla.</button>
                         </div>
                     </form>
@@ -4542,7 +4548,7 @@
                         $('#insertTokens').hide();
                         $('.modal-backdrop').remove();
                         tabTokens.ajax.reload();
-                        document.getElementById('alertSuccIn').style.display = 'block';
+                        document.getElementById('alertSuccInTok').style.display = 'block';
                         $('#accessToken').val('');
                         $('#dataScadenza').val('');
                         $('#cliendId').val('');
@@ -4553,7 +4559,7 @@
                         $('#insertTokens').hide();
                         $('.modal-backdrop').remove();
                         tabTokens.ajax.reload();
-                        document.getElementById('alertErrIn').style.display = 'block';
+                        document.getElementById('alertErrInTok').style.display = 'block';
                     }
                 }
             });
@@ -4587,7 +4593,7 @@
                    $('#deleteToken').hide();
                    $('.modal-backdrop').remove();
                    tabTokens.ajax.reload();
-                   document.getElementById('alertSuccDe').style.display = 'block';
+                   document.getElementById('alertSuccDeTok').style.display = 'block';
                }
             },
             failure: function (response) { 
@@ -4595,7 +4601,7 @@
                     $('#deleteToken').hide();
                     $('.modal-backdrop').remove();
                     tabTokens.ajax.reload();
-                    document.getElementById('alertErrDe').style.display = 'block';
+                    document.getElementById('alertErrDeTok').style.display = 'block';
                 }      
             }
             });
@@ -4615,8 +4621,7 @@
 
         };
         
-        $('#deleteMedicisForm').on('submit', function () {
-
+        function deleteMedicisForm(){
             var arrayDelete = {};
             
             arrayDelete.id = $('#tokenid').val();
@@ -4628,7 +4633,7 @@
             var url = new URL(url_string);
             var access_token = url.searchParams.get("authToken");
             
-            /*$.ajax({
+            $.ajax({
                 url: '../rest/medici/'+arrayDelete.id,
                 method: 'DELETE',
                 headers: {
@@ -4639,25 +4644,28 @@
                 data: JSON.stringify(arrayDelete),
                 success: function (response) {
                    if(response.esito === true){  
-                       $('#deleteToken').hide();
+                       $('#deleteMedici').hide();
                        $('.modal-backdrop').remove();
                        tabMedicis.ajax.reload();
-                       document.getElementById('alertSuccDe').style.display = 'block';
+                       document.getElementById('alertSuccDeMed').style.display = 'block';
+                   }
+                   if(response.esito === false){  
+                       $('#deleteMedici').hide();
+                       $('.modal-backdrop').remove();
+                       tabMedicis.ajax.reload();
+                       document.getElementById('alertErrDeMed').style.display = 'block';
                    }
                 },
                 failure: function (response) { 
                     if (response.status === 401 || response.status === 400 || response.status === 500) {  
-                        $('#deleteToken').hide();
+                        $('#deleteMedici').hide();
                         $('.modal-backdrop').remove();
                         tabMedicis.ajax.reload();
-                        document.getElementById('alertErrDe').style.display = 'block';
+                        document.getElementById('alertErrDeMed').style.display = 'block';
                     }      
                 }
-            });*/
-     
-            return false;
-
-        });
+            });
+        }
         
         function openModalDeleteStrutture() {
             
@@ -4670,8 +4678,7 @@
 
         };
         
-        $('#deleteStrutturaForm').on('submit', function () {
-
+        function deleteStrutturaForm(){
             var arrayDelete = {};
             
             arrayDelete.id = $('#tokenid').val();
@@ -4683,8 +4690,8 @@
             var url = new URL(url_string);
             var access_token = url.searchParams.get("authToken");
             
-            /*$.ajax({
-                url: '../rest/medici/'+arrayDelete.id,
+            $.ajax({
+                url: '../rest/strutture/'+arrayDelete.id,
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -4694,25 +4701,28 @@
                 data: JSON.stringify(arrayDelete),
                 success: function (response) {
                    if(response.esito === true){  
-                       $('#deleteToken').hide();
+                       $('#deleteStrutture').hide();
                        $('.modal-backdrop').remove();
-                       tabMedicis.ajax.reload();
-                       document.getElementById('alertSuccDe').style.display = 'block';
+                       tabStrutture.ajax.reload();
+                       document.getElementById('alertSuccDeStr').style.display = 'block';
+                   }
+                   if(response.esito === false){  
+                       $('#deleteStrutture').hide();
+                       $('.modal-backdrop').remove();
+                       tabStrutture.ajax.reload();
+                       document.getElementById('alertErrDeStr').style.display = 'block';
                    }
                 },
                 failure: function (response) { 
                     if (response.status === 401 || response.status === 400 || response.status === 500) {  
-                        $('#deleteToken').hide();
+                        $('#deleteStrutture').hide();
                         $('.modal-backdrop').remove();
-                        tabMedicis.ajax.reload();
-                        document.getElementById('alertErrDe').style.display = 'block';
+                        tabStrutture.ajax.reload();
+                        document.getElementById('alertErrDeStr').style.display = 'block';
                     }      
                 }
-            });*/
-     
-            return false;
-
-        });
+            });
+        }
         
         
 
