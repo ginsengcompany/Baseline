@@ -73,10 +73,28 @@
     <%
         String url_string = request.getQueryString();
     %>
-    
+
     <style>
         ul {
             list-style-type: none;
+        }
+        .relative {
+            position: relative;
+        }
+
+        .absolute-center {
+          position:absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+
+        .text-center{
+          text-align: center;
+        }
+
+        p {
+          font-size: 1.5rem;
         }
     </style>
     <body class="fixed-sn light-blue-skin">
@@ -183,7 +201,98 @@
     <!--/.Double navigation-->
 
     <!--Main Layout-->
+    <main style="display:none">
 
+        <div class="card card-cascade">
+
+            <!-- Card image -->
+            <div class="view gradient-card-header blue-gradient">
+
+                <!-- Title -->
+                <h2 class="card-header-title mb-3">Adesso</h2>
+                <!-- Subtitle -->
+                <p class="card-header-subtitle mb-0">Processi in esecuzione</p>
+
+            </div>
+
+            <!-- Card content -->
+            <div class="card-body text-center">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="bmd-label-floating" for="myChart4" style="color:black">Esecuzione di istanze di processo</label>
+                        <br>
+                        <canvas id="myChart4" width="400" height="400"></canvas>
+                        <div class="absolute-center text-center">
+                            <br>
+                            <h1 id="total"></h1>
+                            <p><span class="badge red">Istanze Processi</span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="bmd-label-floating" for="myChart1" style="color:black">Incidenti aperti</label>
+                        <br>
+                        <canvas id="myChart1" width="400" height="400"></canvas>
+                        <div class="absolute-center text-center">
+                            <br>
+                            <h1 id="total2"></h1>
+                            <p><span class="badge purple darken-2">Incidenti aperti</span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="bmd-label-floating" for="myChart2" style="color:black">Human Tasks</label>
+                        <br>
+                        <canvas id="myChart2" width="400" height="400"></canvas>
+                        <div class="absolute-center text-center">
+                            <br>
+                            <h1 id="total1"></h1>
+                            <p><span class="badge amber darken-2">Human Tasks</span></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <br>
+        <div class="card card-cascade">
+
+            <!-- Card image -->
+            <div class="view gradient-card-header blue-gradient">
+
+                <!-- Title -->
+                <h2 class="card-header-title mb-3">Line up</h2>
+                <!-- Subtitle -->
+                <p class="card-header-subtitle mb-0">Deployd bpmn</p>
+
+            </div>
+
+            <!-- Card content -->
+            <div class="card-body text-center">
+
+                <table class="table">
+                    <thead class="peach-gradient black-text">
+                        <tr>
+                            <th scope="col" style='font-size:25px'>Process Definitions</th>
+                            <th scope="col" style='font-size:25px'>Decision Definitions</th>
+                            <th scope="col" style='font-size:25px'>Case Definitions</th>
+                            <th scope="col"style='font-size:25px'>Deployments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th id="processdefinition" scope="row" style='font-size:100px'></th>
+                            <td id="decisiondefinition" style='font-size:100px'></td>
+                            <td id="casedefinition" style='font-size:100px'></td>
+                            <td id="deployments" style='font-size:100px'></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </main>     
     <!--Main Layout-->
 
     <!-- SCRIPTS -->
@@ -209,7 +318,7 @@
             $scope.compile = function (elem_from, elem_to) {
                 var content = $compile(angular.element(elem_from))($scope);
                 angular.element(elem_to).append(content);
-            }
+            };
         });
 
         $(document).ajaxError(function (event, jqxhr, settings, exception) {
@@ -220,7 +329,7 @@
 
         // SideNav Initialization
         jQuery(".button-collapse").sideNav();
-        
+
         var sideNavScrollbar = document.querySelector('.custom-scrollbar');
         Ps.initialize(sideNavScrollbar);
 
@@ -241,6 +350,294 @@
                 verificaUtente(queryParams);
             } else {
                 location.href = '/Baseline';
+            }
+
+            if (url.pathname === '/Baseline/dashboard/navigation.jsp') {
+                
+                var newArrayLabelProcess = [];
+                        
+                var newArrayDataProcess = [];
+                
+                var newArrayDataIncidents = [];
+                
+                var ctx4 = $("#myChart4");
+
+                var ctx1 = $("#myChart1");
+
+                var ctx2 = $("#myChart2");
+
+                $.ajax({
+                    url: 'http://localhost:8080/engine-rest/process-definition/statistics?rootIncidents=true',
+                    method: 'GET',
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    success: function (response) {
+                        
+                        var total = 0;
+                        
+                        for(var i = 0; i< response.length; i++){
+                            var a = response[i].definition.key;
+                            newArrayLabelProcess.push(a);
+                        }
+                        
+                        for(var j = 0; j< response.length; j++){
+                            var b = response[j].instances;
+                            total = total + b;
+                            newArrayDataProcess.push(b);
+                        }
+                        
+                        for(var k = 0; k< response.length; k++){
+                            var c = response[k].incidents;
+                            newArrayDataIncidents.push(c);
+                        }
+                        
+                        var myLineChart4 = new Chart(ctx4, {
+                            type: 'doughnut',
+                            data: {
+                                labels: newArrayLabelProcess,
+                                datasets: [{
+                                        data: newArrayDataProcess,
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255,99,132,1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                            },
+                            options:{
+                                segmentShowStroke : true,
+                                segmentStrokeColor : "#fff",
+                                segmentStrokeWidth : 2,
+                                percentageInnerCutout : 50,
+                                animationSteps : 100,
+                                animationEasing : "easeOutBounce",
+                                animateRotate : true,
+                                animateScale : false,
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                showScale: true,
+                                animateScale: true
+                            }
+                        });
+                        
+                        $('#total').html(total);
+                        
+                        var myLineChart1 = new Chart(ctx1, {
+                            type: 'doughnut',
+                            data: {
+                                labels: [],
+                                datasets: [{
+                                        data: newArrayDataIncidents,
+                                        backgroundColor: [
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                            },
+                            options:{
+                                segmentShowStroke : true,
+                                segmentStrokeColor : "#fff",
+                                segmentStrokeWidth : 2,
+                                percentageInnerCutout : 50,
+                                animationSteps : 100,
+                                animationEasing : "easeOutBounce",
+                                animateRotate : true,
+                                animateScale : false,
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                showScale: true,
+                                animateScale: true
+                            }
+                        });
+                        
+                        $('#total2').html(0);
+
+
+                    },
+                    failure: function (response) {
+
+                    }
+                });
+
+                $.ajax({
+                    url: 'http://localhost:8080/engine-rest/task/count?unfinished=true&assigned=true',
+                    method: 'GET',
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    success: function (response) {
+
+                        $.ajax({
+                            url: 'http://localhost:8080/engine-rest/process-definition/count?unfinished=true&assigned=false',
+                            method: 'GET',
+                            processData: false,
+                            contentType: false,
+                            headers: {
+                                'Accept': 'application/json'
+                            },
+                            success: function (response1) {
+
+                                var myLineChart2 = new Chart(ctx2, {
+
+                                    type: 'doughnut',
+                                    data: {
+                                        labels: ["Assegnato a un utente","Non assegnato"],
+                                        datasets: [{
+                                                data: [response.count,response1.count],
+                                                backgroundColor: [
+                                                    'rgba(255, 206, 86, 0.2)',
+                                                    'rgba(75, 192, 192, 0.2)',
+                                                    'rgba(153, 102, 255, 0.2)',
+                                                    'rgba(255, 159, 64, 0.2)'
+                                                ],
+                                                borderColor: [
+                                                    'rgba(255, 206, 86, 1)',
+                                                    'rgba(75, 192, 192, 1)',
+                                                    'rgba(153, 102, 255, 1)',
+                                                    'rgba(255, 159, 64, 1)'
+                                                ],
+                                                borderWidth: 1
+                                            }]
+                                    },
+                                    options:{
+                                        segmentShowStroke : true,
+                                        segmentStrokeColor : "#fff",
+                                        segmentStrokeWidth : 2,
+                                        percentageInnerCutout : 50,
+                                        animationSteps : 100,
+                                        animationEasing : "easeOutBounce",
+                                        animateRotate : true,
+                                        animateScale : false,
+                                        responsive: true,
+                                        maintainAspectRatio: true,
+                                        showScale: true,
+                                        animateScale: true
+                                    }
+
+                                });
+                                
+                                $('#total1').html(response.count + response1.count);
+
+
+                            },
+                            failure: function (response1) {
+
+                            }
+                        });
+
+
+                    },
+                    failure: function (response) {
+
+                    }
+                });
+
+                $.ajax({
+                    url: 'http://localhost:8080/engine-rest/process-definition/count?latestVersion=true',
+                    method: 'GET',
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    success: function (response) {
+
+                        var processdefinition = response.count;
+                        $('#processdefinition').html(processdefinition);
+
+
+                    },
+                    failure: function (response) {
+
+                    }
+                });
+
+                $.ajax({
+                    url: 'http://localhost:8080/engine-rest/decision-definition/count?latestVersion=true',
+                    method: 'GET',
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    success: function (response) {
+
+                        var decisiondefinition = response.count;
+                        $('#decisiondefinition').html(decisiondefinition);
+
+
+                    },
+                    failure: function (response) {
+
+                    }
+                });
+
+                $.ajax({
+                    url: 'http://localhost:8080/engine-rest/case-definition/count?latestVersion=true',
+                    method: 'GET',
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    success: function (response) {
+
+                        var casedefinition = response.count;
+                        $('#casedefinition').html(casedefinition);
+
+
+                    },
+                    failure: function (response) {
+
+                    }
+                });
+
+                $.ajax({
+                    url: 'http://localhost:8080/engine-rest/deployment/count',
+                    method: 'GET',
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    success: function (response) {
+
+                        var deployments = response.count;
+                        $('#deployments').html(deployments);
+
+
+                    },
+                    failure: function (response) {
+
+                    }
+                });
+
+
+                $("main").css("display", "block");
+
+                
             }
 
         });
@@ -312,6 +709,14 @@
     <script type="text/javascript" src="static/js/leaflet.js"></script>
 
     <script type="text/javascript" src="static/js/md5.js"></script>
+
+    <script type="text/javascript" src="static/js/Chart.bundle.js"></script>
+
+    <script type="text/javascript" src="static/js/Chart.bundle.min.js"></script>
+
+    <script type="text/javascript" src="static/js/Chart.js"></script>
+
+    <script type="text/javascript" src="static/js/Chart.min.js"></script>
 
 </body>
 
