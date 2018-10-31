@@ -41,69 +41,95 @@
 
     </div>
     <script>
-        var inquina, stazioni;
-        inquina = <%=request.getAttribute("dati")%>;
-        stazioni = <%=request.getAttribute("luoghi")%>;
-        var map = new L.map('map');
-        var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        var osmAttrib = 'Map dati © Baseline';
-        var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 15, attribution: osmAttrib});
-        map.setView(new L.LatLng("40.9296228", "14.5373564"), 8);
-        map.addLayer(osm);
-        var inquinamentoPerStazioni = {};
-        for (var prop in stazioni.luoghi) {
-            inquinamentoPerStazioni[prop] = stazioni.luoghi[prop];
-            for (var pr in inquina) {
-                if (pr === "benzene" || pr === "pm2_5" || pr === "listaLuoghi")
-                    continue;
-                for (var i = 0; i < inquina[pr].length; i++) {
-                    if (prop === inquina[pr][i].stazione) {
-                        inquinamentoPerStazioni[prop][pr] = {
-                            IQA: inquina[pr][i].IQA,
-                            color: inquina[pr][i].color,
-                            stazione: inquina[pr][i].stazione
-                        };
+            var inquina, stazioni, comuni;
+            inquinaPm10 = <%=request.getAttribute("pm10")%>;
+            stazioni = <%=request.getAttribute("luoghi")%>;
+            comuni = <%=request.getAttribute("comuni")%>;
+            var map = new L.map('map');
+            var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var osmAttrib = 'Map dati © Baseline';
+            var osm = new L.TileLayer(osmUrl, {minZoom: 6, maxZoom: 15, attribution: osmAttrib});
+            map.setView(new L.LatLng("40.9296228","14.5373564"),6);
+            map.addLayer(osm);
+            var optionsLoadBar = {
+                lines: 7,
+                length: 9,
+                width: 12,
+                radius: 8,
+                rotate: 13,
+                color: '#3145a3',
+                speed: 1,
+                trail: 60,
+                shadow: false,
+                hwaccel: false,
+                className: 'spinner',
+                zIndex: 2e9,
+                top: 'auto',
+                left: 'auto'
+            };
+            var spinner = new Spinner(optionsLoadBar).spin(document.getElementById("map"));
+            var inquinamentoPerStazioni = {};
+            for(var prop in stazioni.luoghi){
+                inquinamentoPerStazioni[prop] = stazioni.luoghi[prop];
+                for(var pr in inquinaPm10){
+                    for(var i=0; i < inquinaPm10[pr].length; i++){
+                        if(prop === inquinaPm10[pr][i].stazione){
+                            inquinamentoPerStazioni[prop][pr] = {
+                                IQA : inquinaPm10[pr][i].IQA,
+                                color : inquinaPm10[pr][i].color,
+                                stazione : inquinaPm10[pr][i].stazione
+                            };
+                        }
+                    } 
+                }
+            }
+            for(var prop in inquinamentoPerStazioni){
+                var max = {
+                    val: 0,
+                    color: "",
+                    stazione : "",
+                    latitudine: inquinamentoPerStazioni[prop].latitudine,
+                    longitudine: inquinamentoPerStazioni[prop].longitudine
+                };
+                for(var pr in inquinamentoPerStazioni[prop]){
+                    if(max.val < inquinamentoPerStazioni[prop][pr].IQA){
+                        max.color = inquinamentoPerStazioni[prop][pr].color;
+                        max.val = inquinamentoPerStazioni[prop][pr].IQA;
+                        max.stazione = inquinamentoPerStazioni[prop][pr].stazione;
                     }
                 }
-            }
-        }
-        for (var prop in inquinamentoPerStazioni) {
-            var max = {
-                val: 0,
-                color: "",
-                stazione: "",
-                latitudine: inquinamentoPerStazioni[prop].latitudine,
-                longitudine: inquinamentoPerStazioni[prop].longitudine
-            };
-            for (var pr in inquinamentoPerStazioni[prop]) {
-                if (max.val < inquinamentoPerStazioni[prop][pr].IQA) {
-                    max.color = inquinamentoPerStazioni[prop][pr].color;
-                    max.val = inquinamentoPerStazioni[prop][pr].IQA;
-                    max.stazione = inquinamentoPerStazioni[prop][pr].stazione;
+                if(max.val > 0){
+                    L.circle([max.latitudine, max.longitudine], {
+                        color: max.color,
+                        fillColor: max.color,
+                        fillOpacity: 0.5,
+                        radius: 300
+                    }).bindPopup(max.stazione).addTo(map);
                 }
             }
-            if (max.val > 0) {
-                L.circle([max.latitudine, max.longitudine], {
-                    color: max.color,
-                    fillColor: max.color,
-                    fillOpacity: 0.5,
-                    radius: 800
-                }).bindPopup(max.stazione).addTo(map);
+            var legend = L.control({position: 'bottomright'});
+            legend.onAdd = function (map) {
+                var div = L.DomUtil.create('div', 'info legend');
+                var grades = ["Ottima", "Buona", "Discreta", "Scadente", "Pessima"];
+                var colors = ["#0000ff", "#009900", "#ffff00", "#ff0000", "#cc0099"];
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                            '<i style="background:' + colors[i] + '"></i> ' +
+                            grades[i] + '<br>';
+                }
+                return div;
+            };
+            legend.addTo(map);
+            var markers = L.markerClusterGroup({
+                showCoverageOnHover : true,
+                zoomToBoundsOnClick : true
+            });
+            for(var i=0;i<comuni.length;i++){
+                var marker = L.marker(new L.LatLng(comuni[i].coordinate.latitudine,comuni[i].coordinate.longitudine)).bindPopup(comuni[i].nome + "<br>Incidenza: " + comuni[i].incidenza);
+                markers.addLayer(marker);
             }
-        }
-        var legend = L.control({position: 'bottomright'});
-        legend.onAdd = function (map) {
-            var div = L.DomUtil.create('div', 'info legend');
-            var grades = ["Ottima", "Buona", "Discreta", "Scadente", "Pessima"];
-            var colors = ["#0000ff", "#009900", "#ffff00", "#ff0000", "#cc0099"];
-            for (var i = 0; i < grades.length; i++) {
-                div.innerHTML +=
-                        '<i style="background:' + colors[i] + '"></i> ' +
-                        grades[i] + '<br>';
-            }
-            return div;
-        };
-        legend.addTo(map);
-
+            map.addLayer(markers);
+            legend.addTo(map);
+            spinner.stop();
     </script>
 </main>

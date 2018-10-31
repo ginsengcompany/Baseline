@@ -32,4 +32,8 @@ public class LatLong {
             this.latitudine = lat;
             this.longitudine = longi;
         }
+        
+        public LatLong(){
+            
+        }
 }
