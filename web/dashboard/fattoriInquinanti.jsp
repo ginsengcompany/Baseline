@@ -25,7 +25,7 @@
         <div class="view gradient-card-header blue-gradient">
 
             <!-- Title -->
-            <h2 class="card-header-title mb-3">Fattori Inquinanti</h2>
+            <h2 class="card-header-title mb-3">PM10 (Particulate Matter o Materia Particolata, cioè in piccole particelle)</h2>
             <!-- Subtitle -->
             <p class="card-header-subtitle mb-0">La mappa presenta delle forme circolari colorate che rappresentano, in base al colore, la qualità dell'aria. I dati sono recuperati dal sito www.arpacampania.it, da questi dati viene calcolato l'IQA (indice di qualità dell'aria) per ognuno di essi.</p>
 
@@ -40,6 +40,30 @@
         </div>
 
     </div>
+    <br>
+    <div class="card card-cascade">
+
+        <!-- Card image -->
+        <div class="view gradient-card-header blue-gradient">
+
+            <!-- Title -->
+            <h2 class="card-header-title mb-3">PM10 (Particulate Matter o Materia Particolata, cioè in piccole particelle)</h2>
+            <!-- Subtitle -->
+            <p class="card-header-subtitle mb-0">La mappa presenta delle forme circolari colorate che rappresentano, in base al colore, la qualità dell'aria. I dati sono recuperati dal sito www.arpacampania.it, da questi dati viene calcolato l'IQA (indice di qualità dell'aria) per ognuno di essi.</p>
+
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body text-center">
+
+            <div class="text-center mt-4 mb-2">
+                <div class="embed-responsive embed-responsive-16by9 hoverable">
+                    <iframe class="embed-responsive-item" src="http://webgis.arpa.piemonte.it/aria_qualita_stazioni_webapp/" style="height: 101%" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <script>
             var inquinaPm10, stazioni, comuni;
             inquinaPm10 = <%=request.getAttribute("pm10")%>;
@@ -49,7 +73,7 @@
             var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             var osmAttrib = 'Map dati © Baseline';
             var osm = new L.TileLayer(osmUrl, {minZoom: 6, maxZoom: 15, attribution: osmAttrib});
-            map.setView(new L.LatLng("40.9296228","14.5373564"),6);
+            map.setView(new L.LatLng("40.9296228","14.5373564"),8);
             map.addLayer(osm);
             var optionsLoadBar = {
                 lines: 7,
@@ -110,17 +134,6 @@
                 return div;
             };
             legend.addTo(map);
-            /*
-            var markers = L.markerClusterGroup({
-                showCoverageOnHover : true,
-                zoomToBoundsOnClick : true
-            });
-            for(var i=0;i<comuni.length;i++){
-                var marker = L.marker(new L.LatLng(comuni[i].coordinate.latitudine,comuni[i].coordinate.longitudine)).bindPopup(comuni[i].nome + "<br>Incidenza: " + comuni[i].incidenza);
-                markers.addLayer(marker);
-            }
-            map.addLayer(markers);
-            legend.addTo(map); */
             spinner.stop();
     </script>
 </main>

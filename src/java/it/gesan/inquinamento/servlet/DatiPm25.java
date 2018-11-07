@@ -74,7 +74,7 @@ public class DatiPm25 extends HttpServlet {
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/dashboard/inquinamentoPM25.jsp");
         DatiInquinamento dati = new DatiInquinamento();
         Document doc = Jsoup.connect("http://88.45.133.130/meteoambientecampania/php/pubblicazione_dati_centraline_valori_medi.php").get();
-        URL url = new URL("http://localhost:8080/Baseline/dashboard/static/geojson/provinceCalabria.geojson");
+        URL url = new URL("http://localhost:8081/Baseline/dashboard/static/geojson/provinceCalabria.geojson");
         JsonElement jsonProvinceCalabria = new JsonParser().parse(new InputStreamReader(url.openConnection().getInputStream()));
         dati.populate(doc);
         CsvComuniReader comuni = new CsvComuniReader();

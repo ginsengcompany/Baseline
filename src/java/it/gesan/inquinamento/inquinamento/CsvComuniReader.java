@@ -22,7 +22,7 @@ import java.util.Scanner;
  * @author aldo
  */
 public class CsvComuniReader {
-    private final String csvFile = "http://localhost:8080/Baseline/dashboard/static/csv/comuni.CSV";
+    private final String csvFile = "http://localhost:8081/Baseline/dashboard/static/csv/comuni.CSV";
     private String line = "";
     private final String csvSplit = ";";
     private List<Comune> comuni;

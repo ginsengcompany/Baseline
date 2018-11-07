@@ -21461,7 +21461,7 @@ a.pswp__share--download:hover {
 
 select {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    display: none !important
+    display: none
 }
 
 select.browser-default {

@@ -88,7 +88,7 @@
 
 
             $.ajax({
-                url: 'http://localhost:8080/engine-rest/deployment/create',
+                url: 'http://192.168.125.38:8080/engine-rest/deployment/create',
                 method: 'POST',
                 processData: false,
                 contentType: false,

@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <link rel="apple-touch-icon" sizes="57x57"
@@ -99,10 +98,6 @@
         .text-center{
           text-align: center;
         }
-
-        p {
-          font-size: 1.5rem;
-        }
     </style>
     <body class="fixed-sn light-blue-skin">
         <!--Double navigation-->
@@ -131,6 +126,17 @@
                                 </ul>
                             </div></li>
                     </ul>
+                    <ul class="collapsible collapsible-accordion">
+                        <li><a class="collapsible-header waves-effect arrow-r"><i
+                                    class="fa fa-chevron-right"></i>Creazione BPMN<i
+                                    class="fa fa-angle-down rotate-icon"></i></a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a href="creaBpmn.jsp?<%=url_string%>" class="waves-effect">Crea</a></li>
+                                    </li>
+                                </ul>
+                            </div></li>
+                    </ul>                
                     <ul class="collapsible collapsible-accordion">
                         <li><a class="collapsible-header waves-effect arrow-r"><i
                                     class="fa fa-chevron-right"></i>WorkFlow Engine<i
@@ -171,6 +177,7 @@
                             <div class="collapsible-body">
                                 <a class="nav-link" style="background-color: #6f96bc;" href="inquinamento?<%=url_string%>">PM 10</a>
                                 <a class="nav-link" style="background-color: #6f96bc;" href="inquinamentoPM25?<%=url_string%>">PM 2.5</a>
+                                <a class="nav-link" style="background-color: #6f96bc;" href="inquinamentoPM25Global.jsp?<%=url_string%>">Global Annual PM 2.5 (1998-2016)</a>
                             </div>
                         </li>
                     </ul>
@@ -233,7 +240,7 @@
                         <div class="absolute-center text-center">
                             <br>
                             <h1 id="total"></h1>
-                            <p><span class="badge red">Istanze Processi</span></p>
+                            <p style="font-size: 1.5rem;"><span class="badge red">Istanze Processi</span></p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -243,7 +250,7 @@
                         <div class="absolute-center text-center">
                             <br>
                             <h1 id="total2"></h1>
-                            <p><span class="badge purple darken-2">Incidenti aperti</span></p>
+                            <p style="font-size: 1.5rem;"><span class="badge purple darken-2">Incidenti aperti</span></p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -253,7 +260,7 @@
                         <div class="absolute-center text-center">
                             <br>
                             <h1 id="total1"></h1>
-                            <p><span class="badge amber darken-2">Human Tasks</span></p>
+                            <p style="font-size: 1.5rem;"><span class="badge amber darken-2">Human Tasks</span></p>
                         </div>
                     </div>
                 </div>
@@ -280,18 +287,18 @@
                 <table class="table">
                     <thead class="peach-gradient black-text">
                         <tr>
-                            <th scope="col" style='font-size:25px'>Process Definitions</th>
-                            <th scope="col" style='font-size:25px'>Decision Definitions</th>
-                            <th scope="col" style='font-size:25px'>Case Definitions</th>
-                            <th scope="col"style='font-size:25px'>Deployments</th>
+                            <th scope="col">Process Definitions</th>
+                            <th scope="col">Decision Definitions</th>
+                            <th scope="col">Case Definitions</th>
+                            <th scope="col">Deployments</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th id="processdefinition" scope="row" style='font-size:100px'></th>
-                            <td id="decisiondefinition" style='font-size:100px'></td>
-                            <td id="casedefinition" style='font-size:100px'></td>
-                            <td id="deployments" style='font-size:100px'></td>
+                            <th id="processdefinition" scope="row" style='font-size:50px'></th>
+                            <td id="decisiondefinition" style='font-size:50px'></td>
+                            <td id="casedefinition" style='font-size:50px'></td>
+                            <td id="deployments" style='font-size:50px'></td>
                         </tr>
                     </tbody>
                 </table>
@@ -374,7 +381,7 @@
                 var ctx2 = $("#myChart2");
 
                 $.ajax({
-                    url: 'http://localhost:8080/engine-rest/process-definition/statistics?rootIncidents=true',
+                    url: 'http://192.168.125.38:8080/engine-rest/process-definition/statistics?rootIncidents=true',
                     method: 'GET',
                     processData: false,
                     contentType: false,
@@ -487,7 +494,7 @@
                 });
 
                 $.ajax({
-                    url: 'http://localhost:8080/engine-rest/task/count?unfinished=true&assigned=true',
+                    url: 'http://192.168.125.38:8080/engine-rest/task/count?unfinished=true&assigned=true',
                     method: 'GET',
                     processData: false,
                     contentType: false,
@@ -497,7 +504,7 @@
                     success: function (response) {
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/process-definition/count?unfinished=true&assigned=false',
+                            url: 'http://192.168.125.38:8080/engine-rest/process-definition/count?unfinished=true&assigned=false',
                             method: 'GET',
                             processData: false,
                             contentType: false,
@@ -562,7 +569,7 @@
                 });
 
                 $.ajax({
-                    url: 'http://localhost:8080/engine-rest/process-definition/count?latestVersion=true',
+                    url: 'http://192.168.125.38:8080/engine-rest/process-definition/count?latestVersion=true',
                     method: 'GET',
                     processData: false,
                     contentType: false,
@@ -582,7 +589,7 @@
                 });
 
                 $.ajax({
-                    url: 'http://localhost:8080/engine-rest/decision-definition/count?latestVersion=true',
+                    url: 'http://192.168.125.38:8080/engine-rest/decision-definition/count?latestVersion=true',
                     method: 'GET',
                     processData: false,
                     contentType: false,
@@ -602,7 +609,7 @@
                 });
 
                 $.ajax({
-                    url: 'http://localhost:8080/engine-rest/case-definition/count?latestVersion=true',
+                    url: 'http://192.168.125.38:8080/engine-rest/case-definition/count?latestVersion=true',
                     method: 'GET',
                     processData: false,
                     contentType: false,
@@ -622,7 +629,7 @@
                 });
 
                 $.ajax({
-                    url: 'http://localhost:8080/engine-rest/deployment/count',
+                    url: 'http://192.168.125.38:8080/engine-rest/deployment/count',
                     method: 'GET',
                     processData: false,
                     contentType: false,

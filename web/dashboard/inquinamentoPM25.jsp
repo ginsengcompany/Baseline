@@ -25,11 +25,10 @@
         <div class="view gradient-card-header blue-gradient">
 
             <!-- Title -->
-            <h2 class="card-header-title mb-3">Fattori Inquinanti</h2>
+            <h2 class="card-header-title mb-3">PM 2.5 è una classificazione numerica data alle polveri sottili in base alla loro grandezza.</h2>
             <!-- Subtitle -->
-            <p class="card-header-subtitle mb-0">Global Annual PM2.5 Grids from MODIS, MISR and SeaWiFS Aerosol Optical Depth (AOD) with GWR, v1 (1998-2016).</p>
-            <p class="card-header-subtitle mb-0">Il PM 2,5 è una classificazione numerica data alle polveri sottili in base alla loro grandezza. Più il numero è minore e più sottili sono le polveri e dunque più pericolose per la salute della specie umana ed animale.</p>
-            
+            <p class="card-header-subtitle mb-0">La mappa presenta delle sfumature di colore arancione che rappresentano la classificazione numerica data alle polveri sottili in base alla loro grandezza.</p>
+            <p class="card-header-subtitle mb-0">In evidenza le province della calabria con la rispettivia popolazione aggiornata fino al 2016 e i comuni con i rispettivi numeri di incidenza.</p>
 
         </div>
 
@@ -42,37 +41,17 @@
         </div>
 
     </div>
- <!--  
-    <div class="card card-cascade">
-
-        <div class="view gradient-card-header blue-gradient">
-
-            <h2 class="card-header-title mb-3">Fattori Inquinanti</h2>
-
-            <p class="card-header-subtitle mb-0">Global Annual PM2.5 Grids from MODIS, MISR and SeaWiFS Aerosol Optical Depth (AOD) with GWR, v1 (1998-2016).</p>
-            <p class="card-header-subtitle mb-0">Il PM 2,5 è una classificazione numerica data alle polveri sottili in base alla loro grandezza. Più il numero è minore e più sottili sono le polveri e dunque più pericolose per la salute della specie umana ed animale.</p>
-            
-
-        </div>
-
-
-        <div class="card-body text-center">
-
-            <div class="text-center mt-4 mb-2">
-                <div id="mapid2" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" style="height: 500px;width: auto;"></div>
-            </div>
-        </div>
-
-    </div> -->
     <script>
         var map1 = L.map('mapid1');
         var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        var osmAttrib = 'Map dati © Baseline';
         var osm = new L.tileLayer.wms('http://sedac.ciesin.columbia.edu/geoserver/wms?', {
                 layers: 'sdei:sdei-global-annual-gwr-pm2-5-modis-misr-seawifs-aod_2015'
-            }, {minZoom: 6, maxZoom: 15, attribution: osmAttrib});
-        map1.setView(new L.LatLng("40.9296228", "14.5373564"), 6);
+            }, {minZoom: 6, maxZoom: 15});
+        map1.setView(new L.LatLng("39.0565974","16.5249864"), 8);
         map1.addLayer(osm);
+        map1.attributionControl.addAttribution('Map dati © Baseline');
+        map1.options.minZoom = 6;
+        map1.options.maxZoom = 15;
         function onEachFeature(feature, layer) {
             layer.bindPopup(feature.properties.name_2 + "<br> popolazione: " + feature.properties.popolazione);
             layer.on('mouseover', function (e) {
@@ -131,78 +110,6 @@
         L.geoJSON(provinceCalabria,{
                 onEachFeature: onEachFeature
         }).addTo(map1);
-            
-        // MAP 2
-        /*
-        var inquinaPm25, stazioni;
-            inquinaPm25 = <%=request.getAttribute("pm25")%>;
-            stazioni = <%=request.getAttribute("luoghi")%>;
-            var map2 = new L.map('mapid2');
-            var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib = 'Map dati © Baseline';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 6, maxZoom: 15, attribution: osmAttrib});
-            map2.setView(new L.LatLng("40.9296228","14.5373564"),6);
-            map2.addLayer(osm);
-            var optionsLoadBar = {
-                lines: 7,
-                length: 9,
-                width: 12,
-                radius: 8,
-                rotate: 13,
-                color: '#3145a3',
-                speed: 1,
-                trail: 60,
-                shadow: false,
-                hwaccel: false,
-                className: 'spinner',
-                zIndex: 2e9,
-                top: 'auto',
-                left: 'auto'
-            };
-            var spinner = new Spinner(optionsLoadBar).spin(document.getElementById("mapid2"));
-            var inquinamentoPerStazioni = {};
-            for(var prop in stazioni.luoghi){
-                for(var i=0; i < inquinaPm25.length; i++){
-                    if(prop === inquinaPm25[i].stazione && inquinaPm25[i].IQA){
-                        inquinamentoPerStazioni[prop] = stazioni.luoghi[prop];
-                        inquinamentoPerStazioni[prop].IQA = inquinaPm25[i].IQA;
-                        inquinamentoPerStazioni[prop].color = inquinaPm25[i].color;
-                        inquinamentoPerStazioni[prop].stazione = inquinaPm25[i].stazione;
-                        break;
-                    }
-                } 
-            }
-            for(var prop in inquinamentoPerStazioni){
-                var max = {
-                    val: inquinamentoPerStazioni[prop].IQA,
-                    color: inquinamentoPerStazioni[prop].color,
-                    stazione : inquinamentoPerStazioni[prop].stazione,
-                    latitudine: inquinamentoPerStazioni[prop].latitudine,
-                    longitudine: inquinamentoPerStazioni[prop].longitudine
-                };
-                if(max.val > 0){
-                    L.circle([max.latitudine, max.longitudine], {
-                        color: max.color,
-                        fillColor: max.color,
-                        fillOpacity: 0.5,
-                        radius: 300
-                    }).bindPopup(max.stazione).addTo(map2);
-                }
-            }
-            var legend2 = L.control({position: 'bottomright'});
-            legend2.onAdd = function (map2) {
-                var div = L.DomUtil.create('div', 'info legend');
-                var grades = ["Ottima", "Buona", "Discreta", "Scadente", "Pessima"];
-                var colors = ["#0000ff", "#009900", "#ffff00", "#ff0000", "#cc0099"];
-                for (var i = 0; i < grades.length; i++) {
-                    div.innerHTML +=
-                            '<i style="background:' + colors[i] + '"></i> ' +
-                            grades[i] + '<br>';
-                }
-                return div;
-            };
-            legend2.addTo(map2); 
-            spinner.stop(); */
             
     </script>
 </main>

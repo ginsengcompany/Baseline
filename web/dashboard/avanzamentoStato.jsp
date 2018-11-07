@@ -120,7 +120,7 @@
                 var access_token = url.searchParams.get("authToken");
 
                 $.ajax({
-                    url: 'http://localhost:8080/engine-rest/process-definition',
+                    url: 'http://192.168.125.38:8080/engine-rest/process-definition',
                     method: 'GET',
                     processData: false,
                     contentType: false,
@@ -196,7 +196,7 @@
                     document.getElementById('paziente1').options.length = 1;
 
                     $.ajax({
-                        url: 'http://localhost:8080/engine-rest/task',
+                        url: 'http://192.168.125.38:8080/engine-rest/task',
                         method: 'POST',
                         processData: false,
                         contentType: false,
@@ -213,7 +213,7 @@
 
                                 (function (index) {
                                     $.ajax({
-                                        url: 'http://localhost:8080/engine-rest/task/' + response[i].id + '/form-variables',
+                                        url: 'http://192.168.125.38:8080/engine-rest/task/' + response[i].id + '/form-variables',
                                         method: 'GET',
                                         processData: false,
                                         contentType: false,
@@ -259,7 +259,7 @@
                 function getXml() {
 
                     $.ajax({
-                        url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val(),
+                        url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val(),
                         method: 'GET',
                         processData: false,
                         contentType: false,
@@ -271,7 +271,7 @@
                             var task = response.taskDefinitionKey;
 
                             $.ajax({
-                                url: 'http://localhost:8080/engine-rest/process-definition/' + response.processDefinitionId + '/xml',
+                                url: 'http://192.168.125.38:8080/engine-rest/process-definition/' + response.processDefinitionId + '/xml',
                                 method: 'GET',
                                 processData: false,
                                 contentType: false,
@@ -307,7 +307,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/assignee',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/assignee',
                             method: 'POST',
                             processData: false,
                             contentType: false,
@@ -320,7 +320,7 @@
                             success: function (response) {
 
                                 $.ajax({
-                                    url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/claim',
+                                    url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/claim',
                                     method: 'POST',
                                     processData: false,
                                     contentType: false,
@@ -333,7 +333,7 @@
                                     success: function (response) {
 
                                         $.ajax({
-                                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/rendered-form',
+                                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/rendered-form',
                                             method: 'GET',
                                             processData: false,
                                             contentType: false,
@@ -347,7 +347,7 @@
                                                 SCOPE.compile(data, document.getElementById("renderForm"));
 
                                                 $.ajax({
-                                                    url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/form-variables',
+                                                    url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/form-variables',
                                                     method: 'GET',
                                                     processData: false,
                                                     contentType: false,
@@ -399,7 +399,7 @@
                     $("#renderForm").html("");
 
                     $.ajax({
-                        url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/assignee',
+                        url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/assignee',
                         method: 'POST',
                         processData: false,
                         contentType: false,
@@ -412,7 +412,7 @@
                         success: function (response1) {
 
                             $.ajax({
-                                url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/claim',
+                                url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/claim',
                                 method: 'POST',
                                 processData: false,
                                 contentType: false,
@@ -425,7 +425,7 @@
                                 success: function (response) {
 
                                     $.ajax({
-                                        url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/rendered-form',
+                                        url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/rendered-form',
                                         method: 'GET',
                                         processData: false,
                                         contentType: false,
@@ -439,7 +439,7 @@
                                             SCOPE.compile(data, document.getElementById("renderForm"));
 
                                             $.ajax({
-                                                url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/form-variables',
+                                                url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/form-variables',
                                                 method: 'GET',
                                                 processData: false,
                                                 contentType: false,
@@ -536,7 +536,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
                             method: 'POST',
                             processData: false,
                             contentType: false,
@@ -573,7 +573,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
                             method: 'POST',
                             processData: false,
                             contentType: false,
@@ -610,7 +610,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
                             method: 'POST',
                             processData: false,
                             contentType: false,
@@ -647,7 +647,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
                             method: 'POST',
                             processData: false,
                             contentType: false,
@@ -684,7 +684,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
                             method: 'POST',
                             processData: false,
                             contentType: false,
@@ -721,7 +721,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
                             method: 'POST',
                             processData: false,
                             contentType: false,
@@ -773,7 +773,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
                             method: 'POST',
                             processData: false,
                             contentType: false,
@@ -810,7 +810,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
                             method: 'POST',
                             processData: false,
                             contentType: false,
@@ -876,7 +876,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
                             method: 'POST',
                             processData: false,
                             contentType: false,
@@ -928,7 +928,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
                             method: 'POST',
                             processData: false,
                             contentType: false,
@@ -965,7 +965,7 @@
                         };
 
                         $.ajax({
-                            url: 'http://localhost:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
+                            url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/submit-form',
                             method: 'POST',
                             processData: false,
                             contentType: false,

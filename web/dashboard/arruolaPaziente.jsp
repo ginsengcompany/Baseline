@@ -104,7 +104,7 @@
         });
 
         $.ajax({
-            url: 'http://localhost:8080/engine-rest/process-definition',
+            url: 'http://192.168.125.38:8080/engine-rest/process-definition',
             method: 'GET',
             processData: false,
             contentType: false,
@@ -162,7 +162,7 @@
             console.log(processo);
 
             $.ajax({
-                url: 'http://localhost:8080/engine-rest/process-definition/' + processo + '/submit-form',
+                url: 'http://192.168.125.38:8080/engine-rest/process-definition/' + processo + '/submit-form',
                 method: 'POST',
                 processData: false,
                 contentType: false,

@@ -6312,7 +6312,7 @@ L.Icon.Default = L.Icon.extend({
 		// blue icon images. If you are placing these images in a non-standard
 		// way, set this option to point to the right absolute path.
 		//return (this.options.imagePath || L.Icon.Default.imagePath) + L.Icon.prototype._getIconUrl.call(this, name);
-                return "http://localhost:8080/Baseline/dashboard/static/images/" + L.Icon.prototype._getIconUrl.call(this, name);
+                return "http://localhost:8081/Baseline/dashboard/static/images/" + L.Icon.prototype._getIconUrl.call(this, name);
 	},
 
 	_detectIconPath: function () {
