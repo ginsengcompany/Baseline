@@ -240,11 +240,11 @@
                         <div class="absolute-center text-center">
                             <br>
                             <h1 id="total"></h1>
-                            <p style="font-size: 1.5rem;"><span class="badge red">Istanze Processi</span></p>
+                            <p style="font-size: 1.5rem;"><span class="badge red">Percorsi Attivi</span></p>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label class="bmd-label-floating" for="myChart1" style="color:black">Incidenti aperti</label>
+                        <label class="bmd-label-floating" for="myChart1" style="color:black">Errone nei processi</label>
                         <br>
                         <canvas id="myChart1" width="400" height="400"></canvas>
                         <div class="absolute-center text-center">
@@ -254,13 +254,13 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label class="bmd-label-floating" for="myChart2" style="color:black">Human Tasks</label>
+                        <label class="bmd-label-floating" for="myChart2" style="color:black">Pazienti</label>
                         <br>
                         <canvas id="myChart2" width="400" height="400"></canvas>
                         <div class="absolute-center text-center">
                             <br>
                             <h1 id="total1"></h1>
-                            <p style="font-size: 1.5rem;"><span class="badge amber darken-2">Human Tasks</span></p>
+                            <p style="font-size: 1.5rem;"><span class="badge amber darken-2">Pazienti</span></p>
                         </div>
                     </div>
                 </div>
@@ -517,7 +517,7 @@
 
                                     type: 'doughnut',
                                     data: {
-                                        labels: ["Assegnato a un utente","Non assegnato"],
+                                        labels: ["Pazienti Aruolati","Pazienti Non Aruolati"],
                                         datasets: [{
                                                 data: [response.count,response1.count],
                                                 backgroundColor: [

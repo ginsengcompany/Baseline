@@ -20,6 +20,20 @@
         .highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
             fill: green !important; /* color elements as green */
         }
+        .iqa-ico {
+            width: 11px;
+            height: 11px;
+        }
+        .iqa-ico {
+            float: left;
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px 10px 10px 10px;
+            box-shadow: 0 0 2px 0 rgba(8,8,8,.84);
+            font-size: 7px;
+        }
     </style>
     <div class="card card-cascade">
 
@@ -46,7 +60,18 @@
 
             <div id="canvas" style="height: 1000px;"></div> 
 
-            <button type="button" id="avanza" name="submit" class="btn btn-primary" onclick="openModal()" data-toggle="modal" data-target="#fullHeightModalRight"  style="display: none">Avanzamento<i class="fa fa-upload ml-2"></i></button>
+            <div class="row">
+                
+                <div class="col-md-2">
+                   <button type="button" id="avanza" name="submit" class="btn btn-primary" onclick="openModal()" data-toggle="modal" data-target="#fullHeightModalRight"  style="display: none">Avanzamento<i class="fa fa-upload ml-2"></i></button>
+                </div>
+                
+                <div class="col-md-3">
+                   <button type="button" id="clima" onclick="openClima()" class="btn btn-primary" style="display: none" data-toggle="modal" data-target="#centralModalClima">Analizza Fattori Ambientali<i class="fa fa-sun-o ml-2"></i></button>
+                </div>
+                
+            </div>
+            
         </div>
 
     </div>
@@ -109,6 +134,85 @@
         </div>
     </div>
     <!-- Central Modal Medium Success-->
+    
+    <!-- Central Modal Medium Clima -->
+    <div class="modal fade" id="centralModalClima" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-notify modal-fluid modal-success" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <p class="heading lead">Fattori Ambientali</p>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="">
+                        <div class="text-center">
+                            <i class="fa fa-sun-o fa-4x mb-3 animated rotateIn"></i>
+                        </div>
+                        <p class="text-center">Per Malattia Renale Cronica (MRC) si intende una alterazione strutturale o funzionale presente da più di 3 mesi, può consistere in:</p>
+                        <p class="text-center">1. Danno renale, con o senza riduzione della velocità di filtrazione glomerulare (GFR).</p>
+                        <p class="text-center">2. Velocità di filtrazione glomerulare < 60ml / min / 1.73 m^2, con o senza danno renale.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="padding:5px;background:#D9EBF5">
+                                    <div style="font-weight:bold;color:#1F8BC4;margin-bottom:10px;font-size:1.1em" class="text-center">Legenda dettagliata</div>
+                                    <div>
+                                        <div class="iqa-ico" style="background:#00A0FF"></div>
+                                        <div style="font-weight:bold">&nbsp;&nbsp;Ottima - Molto buona</div>
+                                    </div>
+                                    <div>La qualità dell'aria è molto buona e non produce rischi per la salute.</div>
+                                    <div>
+                                        <div class="iqa-ico" style="background:#00DC00"></div>
+                                        <div style="font-weight:bold">&nbsp;&nbsp;Buona - Discreta</div>
+                                    </div>
+                                    <div>La qualità dell'aria è considerata soddisfacente e l'inquinamento non produce rischi rilevanti per la salute.</div>
+                                    <div>
+                                        <div class="iqa-ico" style="background:#E6DC32"></div>
+                                        <div style="font-weight:bold">&nbsp;&nbsp;Accettabile - Mediocre</div>
+                                    </div>
+                                    <div>La qualità dell'aria è accettabile, comunque per alcuni inquinanti ci potrebbe essere un impatto moderato sulla salute per un piccolo numero di persone. Per esempio, persone che sono particolarmente sensibili all'ozono possono avere sintomi di problemi respiratori. </div>
+                                    <div>
+                                        <div class="iqa-ico" style="background:#F08228"></div>
+                                        <div style="font-weight:bold">&nbsp;&nbsp;Scadente - Inquinaa</div>
+                                    </div>
+                                    <div>Sebbene il generico pubblico non sia affetto da sintomi, gruppi specifici di persone (con malattie cardiache e respiratorie come asma, bronchite cronica, enfisema, anziani e bambini) sono a rischio maggiore in seguito ad esposizione a polveri (PM10) e a ozono.</div>
+                                    <div>
+                                        <div class="iqa-ico" style="background:#FA3C3C"></div>
+                                        <div style="font-weight:bold">&nbsp;&nbsp;Molto inquinata</div>
+                                    </div>
+                                    <div>Ognuno può cominciare a riscontrare effetti negativi sulla salute, più seri nel caso dei gruppi specifici.</div>
+                                    <div>
+                                        <div class="iqa-ico" style="background:#F00082"></div>
+                                        <div style="font-weight:bold">&nbsp;&nbsp;Pessima</div>
+                                    </div>
+                                    <div class="iqa-dett">Condizioni di emergenza per la salute, è probabile che sia colpita da sintomi l'intera popolazione.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                 <img src="" id="fattori"> 
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                    <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Chiudi</a>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!-- Central Modal Medium Clima-->
+    
     <button type="button" id="modalSuccess" name="submit" class="btn btn-primary" data-toggle="modal" data-target="#centralModalSuccess"  style="display: none">Avanzamento<i class="fa fa-upload ml-2"></i></button>
 
     <script>
@@ -153,6 +257,7 @@
 
                 $('#canvas').css("display", "none");
                 $('#avanza').css("display", "none");
+                $('#clima').css("display", "none");
 
                 var bpmnViewer = new BpmnJS({
                     container: '#canvas'
@@ -163,6 +268,7 @@
                 function openDiagram(bpmnXML, task) {
                     $('#canvas').css("display", "block");
                     $('#avanza').css("display", "block");
+                    $('#clima').css("display", "block");
                     // import diagram
                     bpmnViewer.importXML(bpmnXML, function (err) {
                         if (err) {
@@ -995,7 +1101,85 @@
 
                 $('#centralModalSuccess').on('hidden.bs.modal', function () {
                     location.reload();
-                });           
+                });  
+                
+                function openClima(){
+                    
+                    $.ajax({
+                        url: 'http://192.168.125.38:8080/engine-rest/task/' + $('#paziente1').val() + '/form-variables',
+                        method: 'GET',
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        success: function (datas) {
+                            
+                            var url_string = document.URL; 
+            
+                            var url = new URL(url_string);
+                            var access_token = url.searchParams.get("authToken");
+
+                            $.ajax({
+                                url: '../rest/distretti/comune/findByCodiceIstat?codiceIstatComune='+datas.localitaNascita.value,
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': "Bearer " +access_token
+                                },
+                                dataType: "json",
+                                success: function (response) {
+                                   if(response.esito === true){  
+                                       var myJson = JSON.parse(response.object);
+                                       
+                                       var regione = myJson.comune.regioneDescrizione.toLowerCase();
+                                       regione = regione.substring(0,3);
+                                       
+                                       
+                                        $.ajax({
+                                            url: '../rest/distretti/clima/img?namePng='+regione,
+                                            method: 'GET',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'Authorization': "Bearer " +access_token
+                                            },
+                                            dataType: "json",
+                                            success: function (response1) {
+                                               if(response1.esito === true){  
+                                                   
+                                                  var bta = "data:image/png;base64,"+response1.object;
+                                                  $('#fattori').attr("src",bta);
+
+                                               }
+                                            },
+                                            failure: function (response1) { 
+                                                if (response1.status === 401 || response1.status === 400 || response1.status === 500) {  
+                                                    console.log(response1);
+                                                }      
+                                            }
+                                        });
+
+                                       
+                                       
+                                   }
+                                },
+                                failure: function (response) { 
+                                    if (response.status === 401 || response.status === 400 || response.status === 500) {  
+                                        console.log(response);
+                                    }      
+                                }
+                            });
+
+                        },
+                        failure: function (datas) {
+                 
+                        }
+                    });
+                    
+                    
+                    
+                }
 
     </script> 
 </main>
